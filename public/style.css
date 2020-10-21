@@ -1,0 +1,36 @@
+/* Table style */
+.table{
+    border: 1px black solid;
+    display: flex;
+    justify-content: center;
+    height: 60vh;
+}
+
+.table-player{  
+    border: 1px red solid;
+    width: 100%;
+}
+
+.table-dealer{  
+    border: 1px blue solid;
+    width: 100%;
+}
+
+/* Card Style */
+.cards{
+    display: flex;
+}
+
+.card-player{
+    border: 1px orange solid;
+    width: 96px;
+    height: 133.5px;
+    margin: 0 10px 0 10px;
+}
+
+.card-dealer{
+    border: 1px orange solid;
+    width: 96px;
+    height: 133.5px;
+    margin: 0 5px 0 5px;
+}
