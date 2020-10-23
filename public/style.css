@@ -10,7 +10,7 @@ body
   background-color: darkgreen;
 }
 
-.btn-single {
+#btn-single {
     display: inline-block;
     padding: 15px 25px;
     font-size: 24px;
@@ -25,15 +25,15 @@ body
     box-shadow: 0 9px #999;
   }
   
-  .btn-single:hover {background-color: #3e8e41}
+  #btn-single:hover {background-color: #3e8e41}
   
-  .btn-single:active {
+  #btn-single:active {
     background-color: #3e8e41;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
   }
 
-  .btn-multi {
+  #btn-multi {
     display: inline-block;
     padding: 15px 35px;
     font-size: 24px;
@@ -48,9 +48,9 @@ body
     box-shadow: 0 9px #999;
   }
   
-  .btn-multi:hover {background-color: #3e8e41}
+  #btn-multi:hover {background-color: #3e8e41}
   
-  .btn-multi:active {
+  #btn-multi:active {
     background-color: #3e8e41;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
@@ -64,12 +64,12 @@ body
 }
 
 .table-player{  
-    border: 1px red solid;
+    border: 1px white solid;
     width: 100%;
 }
 
 .table-dealer{  
-    border: 1px blue solid;
+    border: 1px white solid;
     width: 100%;
 }
 
@@ -79,7 +79,6 @@ body
 }
 
 .card-player{
-    border: 1px orange solid;
     width: 96px;
     height: 133.5px;
     margin: 0 10px 0 10px;
@@ -90,4 +89,9 @@ body
     width: 96px;
     height: 133.5px;
     margin: 0 5px 0 5px;
+}
+
+.card-img{
+  width: 96px;
+  height: 133.5px;
 }
