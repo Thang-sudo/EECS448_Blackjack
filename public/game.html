@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css"> 
     <title>Document</title>
-    <link rel="stylesheet" href="game.css" />
+    <link rel="stylesheet" href="game.css">
     <script src = "game.js"></script>
 </head>
 <body>
@@ -18,45 +18,43 @@
             <!-- Player's hand -->
             <div class="cards">
                 <div class="card-player">
-                    <p>card1</p>
+                    <p id = "player1Card1">card1</p>
                 </div>
                 <div class="card-player">
-                    <p>card2</p>
+                    <p id = "player1Card2">card2</p>
                 </div>
                 <div class="card-player">
-                    <p>card3</p>
+                    <p id = "player1Card3">card3</p>
                 </div>
                 <div class="card-player">
-                    <p>card4</p>
+                    <p id = "player1Card4">card4</p>
                 </div>
                 <div class="card-player">
-                    <p>card5</p>
+                    <p id = "player1Card5">card5</p>
                 </div>
                 <div class="card-player">
-                    <p>card6</p>
+                    <p id = "player1Card6">card6</p>
                 </div>
             </div>
             <!-- Player's current balance -->
-            <p>Current Balance: 200$</p>
+            <p>Current Balance: $<strong id = "balance">200</strong></p>
         </div>
         <div class="table-dealer">
             <p>dealer table</p>
             <!-- Dealer's hand -->
             <div class="cards">
                 <div class="card-dealer">
-                    <p>card1</p>
+                    <p id = "dealerCard1">card1</p>
                 </div>
                 <div class="card-dealer">
-                    <p>card2</p>
+                    <p id = "dealerCard2">card2</p>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Player buttons -->
-    <div>
-        <button>Hit</button>
-        <button>Stay</button>
-    </div>
+        <button id = "hitButton">Hit</button>
+        <button id = "stayButton">Stay</button>
 </body>
 </html>
