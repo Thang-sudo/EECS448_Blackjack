@@ -3,27 +3,51 @@
 
 let currentBalance = 200;
 let betAmount = 0;
+let currentPhase = 'player phase'
 
 
-let cardArray = new Array(13);//Array for suits
-let suitArray = new Array(4);
-let playerDeck = new Array(5);//Arbitrary number
-let dealerDeck = new Array (5);//Arbitrary number
+let cardArray = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13'];//Array for suits
+let suitArray = ['diamond', 'heart', 'spade', 'club']
+let playerHand = []//Arbitrary number
+let dealerHand = []//Arbitrary number
 
+let hitButton = document.getElementById('hitButton')
+document.addEventListener('DOMContentLoaded', function () {
+    console.log(document)
+});
+hitButton.addEventListener("click", Hit)
 
+function Hit(){
+    if(currentPhase === 'player phase'){
+        let cardDrawn = ''
+        do{
+            console.log("Hit get called")
+            let randomCard = cardArray[Math.floor(Math.random()*cardArray.length)]
+            let randomSuit = suitArray[Math.floor(Math.random()*suitArray.length)]
+            cardDrawn = randomCard + ' '+ randomSuit;
+        }while(cardDrawn in playerHand)
 
-for(let i = 0; i < 4; i++)
-{
-    suitArray[i] = new Array(13);
-}
-
-for(let i = 0; i < 4; i++)
-{
-    for(let j = 0; j < 13; j++)
-    {
-        suitArray[i][j] = "-";
+        playerHand.push(cardDrawn)
+        
+        document.querySelector('#player-hand').innerHTML += "<div class='card-player'><p>"+cardDrawn+"</p></div>"
     }
 }
+
+function dealerDraw(){
+    if(currentPhase === 'player phase'){
+        let cardDrawn = ''
+        do{
+            console.log("Hit get called")
+            let randomCard = cardArray[Math.floor(Math.random()*cardArray.length)]
+            let randomSuit = suitArray[Math.floor(Math.random()*suitArray.length)]
+            cardDrawn = randomCard + ' '+ randomSuit;
+        }while(cardDrawn in playerHand)
+
+        playerHand.push(cardDrawn)
+        document.querySelector('#player-hand').innerHTML += "<div class='card-player'><p>"+cardDrawn+"</p></div>"
+    }
+}
+
 /*Methods:
 
 

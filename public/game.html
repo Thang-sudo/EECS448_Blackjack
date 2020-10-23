@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css"> 
     <title>Document</title>
-    <link rel="stylesheet" href="game.css" />
-    <script src = "game.js"></script>
+    <!-- <link rel="stylesheet" href="game.css" /> -->
+    <script type="module" src = "game.js"></script>
 </head>
 <body>
     <h1>Blackjack (Singleplayer)</h1>
@@ -16,25 +16,8 @@
         <div class="table-player">
             <p>player table</p>
             <!-- Player's hand -->
-            <div class="cards">
-                <div class="card-player">
-                    <p>card1</p>
-                </div>
-                <div class="card-player">
-                    <p>card2</p>
-                </div>
-                <div class="card-player">
-                    <p>card3</p>
-                </div>
-                <div class="card-player">
-                    <p>card4</p>
-                </div>
-                <div class="card-player">
-                    <p>card5</p>
-                </div>
-                <div class="card-player">
-                    <p>card6</p>
-                </div>
+            <div id = "player-hand" class="cards">
+    
             </div>
             <!-- Player's current balance -->
             <p>Current Balance: 200$</p>
@@ -55,8 +38,10 @@
 
     <!-- Player buttons -->
     <div>
-        <button>Hit</button>
+        <button id = "hitButton">Hit</button>
         <button>Stay</button>
     </div>
+    
+    
 </body>
 </html>
