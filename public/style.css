@@ -5,11 +5,17 @@ header{
     height: 300px;
 }
 
-body
-{
-  background-color: darkgreen;
+.title{
+    display: flex;
+    justify-content:center;
+    align-items:center;
 }
 
+body
+{
+    background-color: rgb(0, 129, 0);
+}
+/*button style*/
 .btn-single {
     display: inline-block;
     padding: 15px 25px;
@@ -55,6 +61,58 @@ body
     box-shadow: 0 5px #666;
     transform: translateY(4px);
   }
+  
+  .hitButton{
+    display: inline-block;
+    padding: 15px 42px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;   
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #00ccff;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+  }
+
+  .hitButton:hover{
+    background-color: #ff8800
+  }
+
+  .hitButton:active{
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
+
+  .stayButton{
+    display: inline-block;
+    padding: 15px 35px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;   
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #00ccff;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+  }
+
+  .stayButton:hover{
+    background-color: #ff8800
+  }
+
+  .stayButton:active{
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
+
+
 /* Table style */
 .table{
     border: 1px black solid;
