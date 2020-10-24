@@ -11,6 +11,7 @@ header{
     display: flex;
     justify-content:center;
     align-items:center;
+    color: red;
 }
 
 
@@ -189,4 +190,33 @@ body
 .card-img{
   width: 96px;
   height: 133.5px;
+}
+
+#MessageBoard{
+  color: white;
+  font-size: large;
+}
+
+#playerTable{
+  font-size:35px;
+  color:white;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  text-align: center;
+}
+#dealerTable{
+  font-size:35px;
+  color:white;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  text-align: center;
+}
+#balanceText{
+  font-size:25px;
+  color:white;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.chips{
+  font-size:25px;
+  color:white;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
