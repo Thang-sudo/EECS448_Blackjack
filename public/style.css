@@ -2,7 +2,9 @@ header{
     display: flex;
     justify-content:center;
     align-items:center;
-    height: 300px;
+    height: 600px;
+    font-size: 36px;
+    color: white;
 }
 
 .title{
@@ -11,9 +13,13 @@ header{
     align-items:center;
 }
 
+
 body
 {
-    background-color: rgb(0, 129, 0);
+    background-color: lightgray;
+    background-image: url('https://images.techhive.com/images/article/2017/03/thinkstockphotos-622989362-100713229-large.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 #btn-single {
@@ -142,6 +148,7 @@ body
     display: flex;
     justify-content: center;
     height: 60vh;
+    background-color: rgb(0, 126, 0);
 }
 
 .table-player{  
