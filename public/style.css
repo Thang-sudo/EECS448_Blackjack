@@ -154,28 +154,6 @@ body
     width: 100%;
 }
 /* Table Button style*/
-.oneChips{
-    position: fixed;
-    bottom:30%;
-}
-
-.fiveChips{
-    position: fixed;
-    bottom:30%;
-    left:40px
-}
-
-.tenChips{
-    position: fixed;
-    bottom:30%;
-    left:70px
-}
-
-.fifteenChips{
-    position: fixed;
-    bottom:30%;
-    left:110px;
-}
 
 
 
