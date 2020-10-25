@@ -249,7 +249,7 @@ body
 
 .oneChips{
     display: inline-block;
-    padding: 15px 15px;
+    padding: 30px 15px;
     font-size: 15px;
     cursor: pointer;
     text-align: center;   
@@ -257,27 +257,31 @@ body
     outline: none;
     color: #fff;
     background-color: lightcoral;
+    background-image: url('https://raw.githubusercontent.com/Thang-sudo/EECS448_Blackjack/master/public/image/Chip1.PNG');
+    background-size: cover;
     border: none;
-    border-radius: 15px;
+    border-radius: 35px;
     box-shadow: 0 9px #999;
 }
 .fiveChips{
   display: inline-block;
-    padding: 15px 15px;
+    padding: 32px 15px;
     font-size: 15px;
     cursor: pointer;
     text-align: center;   
     text-decoration: none;
     outline: none;
-    color: #fff;
+    color: black;
     background-color:lightcoral;
+    background-image: url('https://raw.githubusercontent.com/Thang-sudo/EECS448_Blackjack/master/public/image/Chip5.PNG');
+    background-size: cover;
     border: none;
-    border-radius: 15px;
+    border-radius: 35px;
     box-shadow: 0 9px #999;
 }
 .tenChips{
   display: inline-block;
-    padding: 15px 15px;
+    padding: 32px 15px;
     font-size: 15px;
     cursor: pointer;
     text-align: center;   
@@ -285,13 +289,15 @@ body
     outline: none;
     color: #fff;
     background-color: lightcoral;
+    background-image: url('https://raw.githubusercontent.com/Thang-sudo/EECS448_Blackjack/master/public/image/Chip50.PNG');
+    background-size: cover;
     border: none;
-    border-radius: 15px;
+    border-radius: 42px;
     box-shadow: 0 9px #999;
 }
 .fifteenChips{
   display: inline-block;
-    padding: 15px 15px;
+    padding: 32px 15px;
     font-size: 15px;
     cursor: pointer;
     text-align: center;   
@@ -299,7 +305,23 @@ body
     outline: none;
     color: #fff;
     background-color: lightcoral;
+    background-image: url('https://raw.githubusercontent.com/Thang-sudo/EECS448_Blackjack/master/public/image/Chip100.PNG');
+    background-size: cover;
     border: none;
-    border-radius: 15px;
+    border-radius: 42px;
     box-shadow: 0 9px #999;
 }
+
+
+#RuleList{
+  display: table;
+  font-size:30px;
+  color:white;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  margin: 0 auto;
+}
+
+#buttonContainer{
+  text-align: center;
+}
+
