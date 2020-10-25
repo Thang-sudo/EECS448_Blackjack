@@ -262,18 +262,18 @@ body
 }
 .fiveChips{
   display: inline-block;
-    padding: 15px 15px;
+    padding: 30px 15px;
     font-size: 15px;
     cursor: pointer;
     text-align: center;   
     text-decoration: none;
     outline: none;
-    color: #fff;
+    color: black;
     background-color:lightcoral;
-    background-image: url('C:\Users\Grant\Documents\Junior Year Work\EECS448Labs\Project3\EECS448_Blackjack\public\image\Chip5.png');
+    background-image: url('https://raw.githubusercontent.com/Thang-sudo/EECS448_Blackjack/master/public/image/Chip5.PNG');
     background-size: cover;
     border: none;
-    border-radius: 15px;
+    border-radius: 35px;
     box-shadow: 0 9px #999;
 }
 .tenChips{
