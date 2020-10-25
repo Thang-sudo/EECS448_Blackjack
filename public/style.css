@@ -22,14 +22,14 @@ body
     background-color: #4CAF50;
     border: none;
     border-radius: 15px;
-    box-shadow: 0 9px #999;
+    /* box-shadow: 0 9px #999; */
   }
   
   #btn-single:hover {background-color: #3e8e41}
   
   #btn-single:active {
     background-color: #3e8e41;
-    box-shadow: 0 5px #666;
+    /* box-shadow: 0 5px #666; */
     transform: translateY(4px);
   }
 
@@ -45,7 +45,7 @@ body
     background-color: #4CAF50;
     border: none;
     border-radius: 15px;
-    box-shadow: 0 9px #999;
+    /* box-shadow: 0 9px #999; */
   }
   
   #btn-multi:hover {background-color: #3e8e41}
