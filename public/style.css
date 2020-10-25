@@ -270,6 +270,8 @@ body
     outline: none;
     color: #fff;
     background-color:lightcoral;
+    background-image: url('C:\Users\Grant\Documents\Junior Year Work\EECS448Labs\Project3\EECS448_Blackjack\public\image\Chip5.png');
+    background-size: cover;
     border: none;
     border-radius: 15px;
     box-shadow: 0 9px #999;
