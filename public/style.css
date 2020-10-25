@@ -21,6 +21,7 @@ body
     background-image: url('https://images.techhive.com/images/article/2017/03/thinkstockphotos-622989362-100713229-large.jpg');
     background-repeat: no-repeat;
     background-size: cover;
+    overflow: hidden;
 }
 
 #btn-single {
@@ -115,7 +116,7 @@ body
 
   #stayButton:active{
     background-color: #3e8e41;
-    box-shadow: 0 5px #666;
+    /* box-shadow: 0 5px #666; */
     transform: translateY(4px);
   }
 
@@ -156,14 +157,14 @@ body
     background-color: #4CAF50;
     border: none;
     border-radius: 15px;
-    box-shadow: 0 9px #999;
+    /* box-shadow: 0 9px #999; */
   }
   
   #gamerule:hover {background-color: #3e8e41}
   
   #gamerule:active {
     background-color: #3e8e41;
-    box-shadow: 0 5px #666;
+    /* box-shadow: 0 5px #666; */
     transform: translateY(4px);
   }
 

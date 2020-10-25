@@ -6,9 +6,9 @@
     <link rel="stylesheet" href="style.css"> 
     <title>Document</title>
     <!-- <link rel="stylesheet" href="game.css" /> -->
-    <script type="module" src = "game.js"></script>
+    
 </head>
-<body>
+<body onload = 'dealerDraw()'>
     <div class="title">
         <h1></h1>
     </div>
@@ -38,19 +38,14 @@
         <div class="table-dealer">
             <p id="dealerTable">Dealer Table</p>
             <!-- Dealer's hand -->
-            <div class="cards">
-                <div class="card-dealer">
-                    <p id = "dealerCard1">card1</p>
-                </div>
-                <div class="card-dealer">
-                    <p id = "dealerCard2">card2</p>
-                </div>
+            <div id = "dealer-hand" class="cards">
+                <div class='card-player'><img class = 'card-img' src = 'image/cards/red_back.png'></div>
             </div>
         </div>
     </div>
 
     <!-- Player buttons -->
-        <button id = "hitButton" >Hit</button>
+        <button id = "hitButton" onclick="startSinglePlayerMode()" >Hit</button>
         <button id = "stayButton">Stay</button>
         <button id = "backButton" style="float:right" onclick = "location.href='index.html'">Back</button>
 </body>
@@ -60,4 +55,5 @@
     <h1>Blackjack (Singleplayer)</h1>
     <h3>Message Board</h3>
 </footer>
+<script type="text/javascript" src = "game.js"></script>
 </html>

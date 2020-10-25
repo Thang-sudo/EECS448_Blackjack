@@ -11,46 +11,63 @@ let suitArray = ['D', 'H', 'S', 'C']
 let playerHand = []//Arbitrary number
 let dealerHand = []//Arbitrary number
 let mode = ""
-// let singlePlayerButton = document.getElementById('btn-single')
+let playerHandSum = 0
+
 let hitButton = document.getElementById('hitButton')
 
-// singlePlayerButton.addEventListener("click", () => {
-//     mode = "singlePlayer"
-//     console.log(mode)
-// })
+function startSinglePlayerMode(){
+    mode = "singleplayer"
+}
+
 
 hitButton.addEventListener("click", Hit)
+// Draw card to hand
+function drawACard(hand){
+    let cardDrawn = ''
+    do{
+        let randomCard = cardArray[Math.floor(Math.random()*cardArray.length)]
+        let randomSuit = suitArray[Math.floor(Math.random()*suitArray.length)]
+        cardDrawn = randomCard + randomSuit;
+    }while(cardDrawn in hand)
+    return cardDrawn
+}
 
+// add card to player hand
 function Hit(){
     // console.log(mode)
     if(currentPhase === 'player phase'){
-        let cardDrawn = ''
-        do{
-            console.log("Hit get called")
-            let randomCard = cardArray[Math.floor(Math.random()*cardArray.length)]
-            let randomSuit = suitArray[Math.floor(Math.random()*suitArray.length)]
-            cardDrawn = randomCard + randomSuit;
-        }while(cardDrawn in playerHand)
-
+        let cardDrawn = drawACard(playerHand)
         playerHand.push(cardDrawn)
+        let cardLabel = cardDrawn.slice(0,-1)
+        let cardNum = 0
+        if(cardLabel === 'J' || cardLabel === 'Q' || cardLabel === 'K' ){
+            cardNum = 10
+        }
+        else{
+            cardNum = parseInt(cardLabel)
+        }
+        playerHandSum = cardNum + playerHandSum
+        
+        console.log(playerHandSum)
         let imgName = cardDrawn+'.png'
-        console.log(imgName)
         document.querySelector('#player-hand').innerHTML += "<div class='card-player'><img class = 'card-img' src = 'image/cards/"+imgName+"'></div>"
     }
 }
 
+
+//generate dealer hand
 function dealerDraw(){
     if(currentPhase === 'player phase'){
         let cardDrawn = ''
-        do{
-            console.log("Hit get called")
-            let randomCard = cardArray[Math.floor(Math.random()*cardArray.length)]
-            let randomSuit = suitArray[Math.floor(Math.random()*suitArray.length)]
-            cardDrawn = randomCard + randomSuit;
-        }while(cardDrawn in playerHand)
-        let imgName = cardDrawn+'.png'
-        playerHand.push(cardDrawn)
-        document.querySelector('#player-hand').innerHTML += "<div class='card-player'><img src = '"+imgName+"'></div>"
+        while(dealerHand.length < 2){
+            let cardDrawn = drawACard(dealerHand)
+            let imgName = cardDrawn+'.png'
+            dealerHand.push(cardDrawn)
+            if(dealerHand.length == 2){
+                document.querySelector('#dealer-hand').innerHTML += "<div class='card-player'><img class = 'card-img' src = 'image/cards/"+imgName+"'></div>"
+            }
+        }   
+       
     }
 }
 
