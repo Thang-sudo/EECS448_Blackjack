@@ -29,10 +29,10 @@
             <p id= "balanceText">Current Balance: <strong id = "balance">200</strong> Chips</p>
             <div class="chips">
                 Bet amount:
-                <button class ="oneChips">1 Chip</button>
-                <button class ="fiveChips">5 Chips</button>
-                <button class ="tenChips">10 Chips</button>
-                <button class ="fifteenChips">15 Chips</button>
+                <button id ="oneChips" onclick="bet('oneChip')">1 Chip</button>
+                <button id ="fiveChips" onclick="bet('fiveChips')">5 Chips</button>
+                <button id ="tenChips" onclick="bet('tenChips')">10 Chips</button>
+                <button id ="fifteenChips" onclick="bet('fifteenChips')">15 Chips</button>
             </div>
         </div>
         <div class="table-dealer">
@@ -45,8 +45,10 @@
     </div>
 
     <!-- Player buttons -->
-        <button id = "hitButton" onclick="startSinglePlayerMode()" >Hit</button>
-        <button id = "stayButton">Stay</button>
+        <button id = "hitButton" style="display: none;" >Hit</button>
+        <button id = "stayButton" style="display: none;">Stay</button>
+        <button id = "nextTurn" onclick="startNextTurn()" style="display: none;">Next</button>
+        <button id = "resetButton" style="float:right; display:none"  onclick = "location.reload()">Reset</button>
         <button id = "backButton" style="float:right" onclick = "location.href='index.html'">Back</button>
 </body>
 

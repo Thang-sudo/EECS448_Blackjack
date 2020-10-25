@@ -5,18 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css" />
     <title>Team 6 Project 3</title>
-    <script type="module" src = "game.js"></script>
+    <!-- <script type="module" src = "game.js"></script> -->
 </head>
 <header>
     <h2>BlackJack</h2>
 </header>
 <body>
-    <button id="btn-single" style="display:block;margin:0 auto" onclick = "location.href='game.html'">Single player</button>
+    <button id="btn-single" style="display:block;margin:0 auto"  onclick="startSinglePlayerMode()" >Single player</button>
     &nbsp;
-    <button id="btn-multi" style="display:block;margin:0 auto" onclick = "location.href='game.html'">Multiplayer</button>
+    <button id="btn-multi" style="display:block;margin:0 auto" onclick = "startMultiplayerMode()">Multiplayer</button>
     &nbsp;
-    <button id="gamerule" style="display:block;margin:0 auto" onclick = "location.href='gamerule.html'">Rules</button>
+    <button id="gamerule" style="display:block;margin:0 auto" onclick = "startGameRule()">Rules</button>
 
-
+    <script type="text/javascript" src = "game.js"></script>
 </body>
 </html>
