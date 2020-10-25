@@ -81,6 +81,10 @@ function Stay(){
         console.log("Player won this round")
         currentBalance = currentBalance + betAmount * 2
     }
+    else if(playerHand === dealerHandSum){
+        console.log("It's a tie")
+        currentBalance = currentBalance + betAmount
+    }
     else{
         console.log("Dealer won this round")
     }
@@ -89,24 +93,28 @@ function Stay(){
 }
 
 // check if player is over 21
-function handCheck(hand){
+function handCheck(){
     if(playerHandSum === 21){
         console.log("Black Jack!")
         currentBalance = currentBalance + betAmount * 2
+        document.getElementById('balanceText').innerText = "Current Balance:" + currentBalance + " Chips"
         revealDealerHand()
         checkWinCondition()
         getNextButton()
     }
     else if(playerHandSum > 21){
-        if('AD' in hand || 'AH' in hand || 'AS' in hand || 'AC' in hand){
+        if(playerHand.includes('AD') || playerHand.includes('AH') || playerHand.includes('AS') || playerHand.includes('AC')){
             playerHandSum = playerHandSum - 10
+            console.log("Ace is in hand")
             if(playerHandSum > 21){
                 console.log("Busted")
                 revealDealerHand()
                 checkWinCondition()
                 getNextButton()
             }
-           
+            else{
+                return
+            }
         }
         else{
             console.log("Busted")
@@ -205,6 +213,7 @@ function bet(id){
     }
     console.log(betAmount)
     currentBalance = currentBalance - betAmount
+    document.getElementById('balanceText').innerText = "Current Balance:" + currentBalance + " Chips"
     changesWhenBetCalled()
 }
 
@@ -218,12 +227,12 @@ function changesWhenBetCalled(){
     document.getElementById('fiveChips').disabled = true
     document.getElementById('tenChips').disabled = true
     document.getElementById('fifteenChips').disabled = true
-    document.getElementById('balanceText').innerText = "Current Balance:" + currentBalance + " Chips"
+    
 }
 
 // Check for the win condition
 function checkWinCondition(){
-    if(currentBalance >= 205){
+    if(currentBalance >= 250){
         console.log("Player wins")
         hitButton.style.display = "none"
         stayButton.style.display = "none"
