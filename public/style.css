@@ -258,6 +258,8 @@ body
 .card-img{
   width: 96px;
   height: 133.5px;
+  border: 1px solid black;
+  border-radius: 10px;
 }
 
 #MessageBoard{
