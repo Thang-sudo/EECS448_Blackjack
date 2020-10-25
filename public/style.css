@@ -69,7 +69,7 @@ body
     transform: translateY(4px);
   }
   
-  .hitButton{
+  #hitButton{
     display: inline-block;
     padding: 15px 42px;
     font-size: 24px;
@@ -84,17 +84,17 @@ body
     box-shadow: 0 9px #999;
   }
 
-  .hitButton:hover{
+  #hitButton:hover{
     background-color: #ff8800
   }
 
-  .hitButton:active{
+  #hitButton:active{
     background-color: #3e8e41;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
   }
 
-  .stayButton{
+  #stayButton{
     display: inline-block;
     padding: 15px 35px;
     font-size: 24px;
@@ -109,17 +109,17 @@ body
     box-shadow: 0 9px #999;
   }
 
-  .stayButton:hover{
+  #stayButton:hover{
     background-color: #ff8800
   }
 
-  .stayButton:active{
+  #stayButton:active{
     background-color: #3e8e41;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
   }
 
-  .backButton{
+  #backButton{
     display: inline-block;
     padding: 15px 35px;
     font-size: 24px;
@@ -134,11 +134,11 @@ body
     box-shadow: 0 9px #999;
   }
 
-  .backButton:hover{
+  #backButton:hover{
     background-color: #ff8800
   }
 
-  .backButton:active{
+  #backButton:active{
     background-color: #3e8e41;
     box-shadow: 0 5px #666;
     transform: translateY(4px);

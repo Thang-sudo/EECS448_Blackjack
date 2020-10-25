@@ -11,7 +11,7 @@ let suitArray = ['D', 'H', 'S', 'C']
 let playerHand = []//Arbitrary number
 let dealerHand = []//Arbitrary number
 let mode = ""
-let singlePlayerButton = document.getElementById('btn-single')
+// let singlePlayerButton = document.getElementById('btn-single')
 let hitButton = document.getElementById('hitButton')
 
 // singlePlayerButton.addEventListener("click", () => {
