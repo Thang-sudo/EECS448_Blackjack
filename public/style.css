@@ -2,7 +2,7 @@ header{
     display: flex;
     justify-content:center;
     align-items:center;
-    height: 30%;
+    height: 600px;
     font-size: 36px;
     color: white;
 }
@@ -114,6 +114,31 @@ body
   }
 
   .stayButton:active{
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
+
+  .backButton{
+    display: inline-block;
+    padding: 15px 35px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;   
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #00ccff;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+  }
+
+  .backButton:hover{
+    background-color: #ff8800
+  }
+
+  .backButton:active{
     background-color: #3e8e41;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
