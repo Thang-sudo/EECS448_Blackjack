@@ -9,21 +9,34 @@
     <script type="module" src = "game.js"></script>
 </head>
 <body>
-    <h1>Blackjack (Singleplayer)</h1>
-
+    <div class="title">
+        <h1></h1>
+    </div>
+</br>
+</br>
+</br>
+</br>
+</br>
     <!-- Main table -->
     <div class="table">
         <div class="table-player">
-            <p>player table</p>
+            <p id="playerTable">Player Table</p>
             <!-- Player's hand -->
             <div id = "player-hand" class="cards">
     
             </div>
             <!-- Player's current balance -->
-            <p>Current Balance: $<strong id = "balance">200</strong></p>
+            <p id= "balanceText">Current Balance: <strong id = "balance">200</strong> Chips</p>
+            <div class="chips">
+                Bet amount:
+                <button class ="oneChips">1 Chip</button>
+                <button class ="fiveChips">5 Chips</button>
+                <button class ="tenChips">10 Chips</button>
+                <button class ="fifteenChips">15 Chips</button>
+            </div>
         </div>
         <div class="table-dealer">
-            <p>dealer table</p>
+            <p id="dealerTable">Dealer Table</p>
             <!-- Dealer's hand -->
             <div class="cards">
                 <div class="card-dealer">
@@ -37,10 +50,14 @@
     </div>
 
     <!-- Player buttons -->
-    <div>
-        <button id = "hitButton">Hit</button>
-        <button>Stay</button>
-    </div>
-    
+        <button class = "hitButton" >Hit</button>
+        <button class = "stayButton">Stay</button>
+        <button class = "backButton" style="float:right" onclick = "location.href='index.html'">Back</button>
 </body>
+
+<!-- show the game message -->
+<footer id="MessageBoard" style="text-align: center;">
+    <h1>Blackjack (Singleplayer)</h1>
+    <h3>Message Board</h3>
+</footer>
 </html>

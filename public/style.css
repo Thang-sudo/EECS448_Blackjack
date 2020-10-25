@@ -2,12 +2,25 @@ header{
     display: flex;
     justify-content:center;
     align-items:center;
-    height: 300px;
+    height: 600px;
+    font-size: 36px;
+    color: white;
 }
+
+.title{
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    color: red;
+}
+
 
 body
 {
-  background-color: darkgreen;
+    background-color: lightgray;
+    background-image: url('https://images.techhive.com/images/article/2017/03/thinkstockphotos-622989362-100713229-large.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 #btn-single {
@@ -55,12 +68,113 @@ body
     box-shadow: 0 5px #666;
     transform: translateY(4px);
   }
+  
+  .hitButton{
+    display: inline-block;
+    padding: 15px 42px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;   
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #00ccff;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+  }
+
+  .hitButton:hover{
+    background-color: #ff8800
+  }
+
+  .hitButton:active{
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
+
+  .stayButton{
+    display: inline-block;
+    padding: 15px 35px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;   
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #00ccff;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+  }
+
+  .stayButton:hover{
+    background-color: #ff8800
+  }
+
+  .stayButton:active{
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
+
+  .backButton{
+    display: inline-block;
+    padding: 15px 35px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;   
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #00ccff;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+  }
+
+  .backButton:hover{
+    background-color: #ff8800
+  }
+
+  .backButton:active{
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
+
+  #gamerule {
+    display: inline-block;
+    padding: 15px 68px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;   
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+  }
+  
+  #gamerule:hover {background-color: #3e8e41}
+  
+  #gamerule:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
+
+
 /* Table style */
 .table{
     border: 1px black solid;
     display: flex;
     justify-content: center;
     height: 60vh;
+    background-color: rgb(0, 126, 0);
 }
 
 .table-player{  
@@ -72,6 +186,13 @@ body
     border: 1px white solid;
     width: 100%;
 }
+/* Table Button style*/
+
+
+
+
+
+
 
 /* Card Style */
 .cards{
@@ -94,4 +215,33 @@ body
 .card-img{
   width: 96px;
   height: 133.5px;
+}
+
+#MessageBoard{
+  color: white;
+  font-size: large;
+}
+
+#playerTable{
+  font-size:35px;
+  color:white;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  text-align: center;
+}
+#dealerTable{
+  font-size:35px;
+  color:white;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  text-align: center;
+}
+#balanceText{
+  font-size:25px;
+  color:white;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.chips{
+  font-size:25px;
+  color:white;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
