@@ -1,4 +1,4 @@
-let currentBalance = 200
+let currentBalance = 50
 let betAmount = 0
 let currentPhase = 'player phase'
 
@@ -241,7 +241,7 @@ function changesWhenBetCalled(){
 
 // Check for the win condition
 function checkWinCondition(){
-    if(currentBalance >= 250){
+    if(currentBalance >= 100){
         console.log("Player wins")
         document.getElementById('message').innerText = 'Player wins'
         hitButton.style.display = "none"
