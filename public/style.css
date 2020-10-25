@@ -2,7 +2,7 @@ header{
     display: flex;
     justify-content:center;
     align-items:center;
-    height: 600px;
+    height: 400px;
     font-size: 36px;
     color: white;
 }
@@ -71,6 +71,7 @@ body
   }
   
   #hitButton{
+    margin-top: 5px;
     display: inline-block;
     padding: 15px 42px;
     font-size: 24px;
@@ -82,7 +83,7 @@ body
     background-color: #00ccff;
     border: none;
     border-radius: 15px;
-    box-shadow: 0 9px #999;
+    /* box-shadow: 0 9px #999; */
   }
 
   #hitButton:hover{
@@ -91,7 +92,7 @@ body
 
   #hitButton:active{
     background-color: #3e8e41;
-    box-shadow: 0 5px #666;
+    /* box-shadow: 0 5px #666; */
     transform: translateY(4px);
   }
 
@@ -107,7 +108,7 @@ body
     background-color: #00ccff;
     border: none;
     border-radius: 15px;
-    box-shadow: 0 9px #999;
+    /* box-shadow: 0 9px #999; */
   }
 
   #stayButton:hover{
@@ -131,7 +132,7 @@ body
     background-color: #00ccff;
     border: none;
     border-radius: 15px;
-    box-shadow: 0 9px #999;
+    /* box-shadow: 0 9px #999; */
   }
 
   #nextTurn:active{
@@ -141,6 +142,7 @@ body
   }
 
   #backButton{
+    margin-top: 5px;
     display: inline-block;
     padding: 15px 35px;
     font-size: 24px;
@@ -152,7 +154,7 @@ body
     background-color: #00ccff;
     border: none;
     border-radius: 15px;
-    box-shadow: 0 9px #999;
+    /* box-shadow: 0 9px #999; */
   }
 
   #backButton:hover{
@@ -161,7 +163,7 @@ body
 
   #backButton:active{
     background-color: #3e8e41;
-    box-shadow: 0 5px #666;
+    /* box-shadow: 0 5px #666; */
     transform: translateY(4px);
   }
 
@@ -177,7 +179,7 @@ body
     background-color: #00ccff;
     border: none;
     border-radius: 15px;
-    box-shadow: 0 9px #999;
+    /* box-shadow: 0 9px #999; */
   }
 
   #resetButton:active{
@@ -230,6 +232,16 @@ body
 }
 /* Table Button style*/
 
+.messageBoard{
+  margin-top: 12.5%;
+  margin-left: 25%;
+  background-color: black;
+  color: white;
+  text-align: center;
+  width: 50%;
+  border: white 1px solid;
+  border-radius: 10px;
+}
 
 
 

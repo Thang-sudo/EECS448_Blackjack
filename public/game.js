@@ -79,13 +79,16 @@ function Stay(){
     revealDealerHand()
     if(playerHandSum > dealerHandSum){
         console.log("Player won this round")
+        document.getElementById('message').innerText = 'Player won this round'
         currentBalance = currentBalance + betAmount * 2
     }
     else if(playerHand === dealerHandSum){
+        document.getElementById('message').innerText = "It's a tie"
         console.log("It's a tie")
         currentBalance = currentBalance + betAmount
     }
     else{
+        document.getElementById('message').innerText = 'Dealer won this round'
         console.log("Dealer won this round")
     }
     getNextButton()
@@ -96,8 +99,10 @@ function Stay(){
 function handCheck(){
     if(playerHandSum === 21){
         console.log("Black Jack!")
+        document.getElementById('message').innerText = 'Black Jack!'
         currentBalance = currentBalance + betAmount * 2
         document.getElementById('balanceText').innerText = "Current Balance:" + currentBalance + " Chips"
+        
         revealDealerHand()
         checkWinCondition()
         getNextButton()
@@ -108,6 +113,7 @@ function handCheck(){
             console.log("Ace is in hand")
             if(playerHandSum > 21){
                 console.log("Busted")
+                document.getElementById('message').innerText = 'Busted!'
                 revealDealerHand()
                 checkWinCondition()
                 getNextButton()
@@ -117,6 +123,7 @@ function handCheck(){
             }
         }
         else{
+            document.getElementById('message').innerText = 'Busted!'
             console.log("Busted")
             revealDealerHand()
             checkWinCondition()
@@ -142,6 +149,7 @@ function getNextButton(){
 // Start a new turn when user presses next button
 function startNextTurn(){
     // clear player hand and creat new hand for dealer
+    document.getElementById('message').innerText = 'Choose your bet'
     document.querySelector('#player-hand').innerHTML = " "
     document.querySelector('#dealer-hand').innerHTML = "<div class='card-player'><img class = 'card-img' src = 'image/cards/red_back.png'></div> "
     document.getElementById('nextTurn').style.display = "none"
@@ -227,6 +235,7 @@ function changesWhenBetCalled(){
     document.getElementById('fiveChips').disabled = true
     document.getElementById('tenChips').disabled = true
     document.getElementById('fifteenChips').disabled = true
+    document.getElementById('message').innerText = 'Hit or Stay'
     
 }
 
@@ -234,6 +243,7 @@ function changesWhenBetCalled(){
 function checkWinCondition(){
     if(currentBalance >= 250){
         console.log("Player wins")
+        document.getElementById('message').innerText = 'Player wins'
         hitButton.style.display = "none"
         stayButton.style.display = "none"
         document.getElementById('nextTurn').style.display = "none"
@@ -245,6 +255,7 @@ function checkWinCondition(){
     }
     else if(currentBalance <= 0){
         console.log("Player lost")
+        document.getElementById('message').innerText = 'Player loses'
         hitButton.style.display = "none"
         stayButton.style.display = "none"
         document.getElementById('nextTurn').style.display = "none"
