@@ -10,9 +10,13 @@ let dealerHand = []//Arbitrary number
 let mode = ""
 let playerHandSum = 0
 let dealerHandSum = 0
+let numOfAce = 0
 let hitButton = document.getElementById('hitButton')
 let stayButton = document.getElementById('stayButton')
-
+let oneChip = document.getElementById('oneChips')
+let fiveChips = document.getElementById('fiveChips')
+let tenChips = document.getElementById('tenChips')
+let fifteenChips = document.getElementById('fifteenChips')
 
 function startSinglePlayerMode(){
     mode = "singleplayer"
@@ -54,8 +58,11 @@ function Hit(){
             playerHandSum = cardNum + playerHandSum
         }
         else if(cardLabel === 'A'){
+            console.log("Drew " + cardLabel)
+            numOfAce = numOfAce + 1;
             if(playerHandSum + 11 > 21){
                 cardNum = 1
+                numOfAce = numOfAce - 1;
             }
             else{
                 cardNum = 11
@@ -77,12 +84,12 @@ function Hit(){
 // Player chooses to stay
 function Stay(){
     revealDealerHand()
-    if(playerHandSum > dealerHandSum){
+    if(dealerHandSum > 21 || playerHandSum > dealerHandSum){
         console.log("Player won this round")
         document.getElementById('message').innerText = 'Player won this round'
         currentBalance = currentBalance + betAmount * 2
     }
-    else if(playerHand === dealerHandSum){
+    else if(playerHandSum === dealerHandSum){
         document.getElementById('message').innerText = "It's a tie"
         console.log("It's a tie")
         currentBalance = currentBalance + betAmount
@@ -108,7 +115,8 @@ function handCheck(){
         getNextButton()
     }
     else if(playerHandSum > 21){
-        if(playerHand.includes('AD') || playerHand.includes('AH') || playerHand.includes('AS') || playerHand.includes('AC')){
+        if(numOfAce > 0){
+            numOfAce = numOfAce - 1;
             playerHandSum = playerHandSum - 10
             console.log("Ace is in hand")
             if(playerHandSum > 21){
@@ -132,10 +140,74 @@ function handCheck(){
     }
 }
 
+function disableChips(balance){
+    if(balance < 1){
+        
+    }
+}
+
 // Reveal dealer hand
 function revealDealerHand(){
     let imgName = dealerHand[0] + '.png'
     document.getElementById('dealer-hand').children[0].innerHTML = "<div class='card-player'><img class = 'card-img' src = 'image/cards/"+imgName+"'></div>"
+    while(dealerHandSum < 17){
+        let cardDrawn = drawACard(dealerHand)
+            let imgName = cardDrawn+'.png'
+            dealerHand.push(cardDrawn)
+            document.querySelector('#dealer-hand').innerHTML += "<div class='card-player'><img class = 'card-img' src = 'image/cards/"+imgName+"'></div>"
+            let cardLabel = cardDrawn.slice(0,-1)
+            let cardNum = 0
+            if(cardLabel === 'J' || cardLabel === 'Q' || cardLabel === 'K' ){
+                cardNum = 10
+                dealerHandSum = cardNum + dealerHandSum
+            }
+            else if(cardLabel === 'A'){
+                if(dealerHandSum + 11 > 21){
+                    cardNum = 1
+                }
+                else{
+                    cardNum = 11
+                }
+                dealerHandSum = dealerHandSum + cardNum
+            }
+            else{
+                cardNum = parseInt(cardLabel)
+                dealerHandSum = dealerHandSum + cardNum
+            }
+    }
+}
+
+function disableBetAmount(balance){
+    if(balance < 1){
+        oneChip.disabled = true;
+        fiveChips.disabled = true;
+        tenChips.disabled = true;
+        fifteenChips.disabled = true;
+    }
+    else if(balance < 5){
+        oneChip.disabled = false;
+        fiveChips.disabled = true;
+        tenChips.disabled = true;
+        fifteenChips.disabled = true;
+    }
+    else if(balance < 10){
+        oneChip.disabled = false;
+        fiveChips.disabled = false;
+        tenChips.disabled = true;
+        fifteenChips.disabled = true;
+    }
+    else if(balance < 15){
+        oneChip.disabled = false;
+        fiveChips.disabled = false;
+        tenChips.disabled = false;
+        fifteenChips.disabled = true;
+    }
+    else{
+        oneChip.disabled = false;
+        fiveChips.disabled = false;
+        tenChips.disabled = false;
+        fifteenChips.disabled = false;
+    }
 }
 
 // changes when busted or black jack happens
@@ -149,16 +221,13 @@ function getNextButton(){
 // Start a new turn when user presses next button
 function startNextTurn(){
     // clear player hand and creat new hand for dealer
+    disableBetAmount(currentBalance);
     document.getElementById('message').innerText = 'Choose your bet'
     document.querySelector('#player-hand').innerHTML = " "
     document.querySelector('#dealer-hand').innerHTML = "<div class='card-player'><img class = 'card-img' src = 'image/cards/red_back.png'></div> "
     document.getElementById('nextTurn').style.display = "none"
     hitButton.style.display = "none"
     stayButton.style.display = "none"
-    document.getElementById('oneChips').disabled = false
-    document.getElementById('fiveChips').disabled = false
-    document.getElementById('tenChips').disabled = false
-    document.getElementById('fifteenChips').disabled = false
     
     playerHand = []
     dealerHand = []
@@ -207,16 +276,16 @@ function dealerDraw(){
 
 // Player chooses an amount to bet, then player can start to hit
 function bet(id){
-    if(id === 'oneChip'){
+    if( (id === 'oneChip')){
         betAmount = 1
     }
-    else if(id === 'fiveChips'){
+    else if((currentBalance >= 5) && (id === 'fiveChips')){
         betAmount = 5
     }
-    else if(id === 'tenChips'){
+    else if((currentBalance >= 10) && (id === 'tenChips')){
         betAmount = 10
     }
-    else if(id === 'fifteenChips'){
+    else if((currentBalance >= 15) && (id === 'fifteenChips')){
         betAmount = 15
     }
     console.log(betAmount)
@@ -231,10 +300,10 @@ function changesWhenBetCalled(){
     stayButton.style.display = "inline-block"
     hitButton.disabled = false
     stayButton.disabled = false
-    document.getElementById('oneChips').disabled = true
-    document.getElementById('fiveChips').disabled = true
-    document.getElementById('tenChips').disabled = true
-    document.getElementById('fifteenChips').disabled = true
+    oneChip.disabled = true
+    fiveChips.disabled = true
+    tenChips.disabled = true
+    fifteenChips.disabled = true
     document.getElementById('message').innerText = 'Hit or Stay'
     
 }
@@ -247,10 +316,10 @@ function checkWinCondition(){
         hitButton.style.display = "none"
         stayButton.style.display = "none"
         document.getElementById('nextTurn').style.display = "none"
-        document.getElementById('oneChips').disabled = true
-        document.getElementById('fiveChips').disabled = true
-        document.getElementById('tenChips').disabled = true
-        document.getElementById('fifteenChips').disabled = true
+        oneChip.disabled = true
+        fiveChips.disabled = true
+        tenChips.disabled = true
+        fifteenChips.disabled = true
         document.getElementById('resetButton').style = 'inline-block'
     }
     else if(currentBalance <= 0){
@@ -259,30 +328,11 @@ function checkWinCondition(){
         hitButton.style.display = "none"
         stayButton.style.display = "none"
         document.getElementById('nextTurn').style.display = "none"
-        document.getElementById('oneChips').disabled = true
-        document.getElementById('fiveChips').disabled = true
-        document.getElementById('tenChips').disabled = true
-        document.getElementById('fifteenChips').disabled = true
+        oneChip.disabled = true
+        fiveChips.disabled = true
+        tenChips.disabled = true
+        fifteenChips.disabled = true
         document.getElementById('resetButton').style = 'inline-block'
     }
 }
 
-
-/*
-Methods:
-
-
-
-hit();//Get another card (at your own peril), calls generateCard();
-stay(); //End your turn, calls revealCard();
-
-
-currentPhase();//Check whose turn it is
-generateCard();//will select a card from the stack
-checkValidCard();
-revealCard();//Reveals dealers other card
-compareCardDecks();//Compares the sums of each deck
-We will need a deck.js file
-
-
-*/
