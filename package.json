@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "dev":"server nodemon",
+    "dev": "server nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -16,6 +16,8 @@
     "socket.io": "^2.3.0"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1",
     "nodemon": "^2.0.6"
   }
 }
