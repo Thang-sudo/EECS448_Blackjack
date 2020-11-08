@@ -401,6 +401,7 @@ function startNextTurn(){
     // clear player hand and creat new hand for dealer
     betAmount = 0
     disableBetAmount(currentBalance);
+    clearBet.disabled = false;
     document.getElementById('message').innerText = 'Choose your bet'
     document.querySelector('#player-hand').innerHTML = " "
     document.querySelector('#dealer-hand').innerHTML = "<div class='card-player'><img class = 'card-img' src = 'image/cards/red_back.png'></div> "
