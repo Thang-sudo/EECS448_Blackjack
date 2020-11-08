@@ -8,6 +8,7 @@ let suitArray = ['D', 'H', 'S', 'C']
 let playerHand = []//Arbitrary number
 let dealerHand = []//Arbitrary number
 
+let m_playerHolder = 0;
 let playerHandSum = 0
 let dealerHandSum = 0
 let numOfAce = 0
@@ -76,11 +77,14 @@ function startMultiPlayerMode(){
 
 function playerConnectionStatus(number){
     let player = `#player${parseInt(number) + 1}`
+    let playerID = `#playerID${parseInt(number) + 1}` //For scoreboard
     document.querySelector(`${player} .connected span`).classList.toggle('green');
     // Tell what player we are
     if(parseInt(number) === playerNum){
         console.log(`You are player ${playerNum + 1}`);
-        document.querySelector(player).style.fontWeight = 'bold';
+        m_playerHolder = playerNum + 1;//For scoreboard
+        document.querySelector(playerID).style.fontWeight = 'bold';
+        document.querySelector(playerID).innerHTML = "You are Player " + m_playerHolder;//For scoreboard
     }
 }
 
