@@ -72,6 +72,7 @@ function startMultiPlayerMode(){
 function playerConnectionStatus(number){
     let player = `#player${parseInt(number) + 1}`
     let playerID = `#playerID${parseInt(number) + 1}` //For scoreboard
+    let m_playerTable = document.getElementById('playerTable');
     document.querySelector(`${player} .connected span`).classList.toggle('green');
     // Tell what player we are
     if(parseInt(number) === playerNum){
@@ -79,6 +80,7 @@ function playerConnectionStatus(number){
         m_playerHolder = playerNum + 1;//For scoreboard
         document.querySelector(playerID).style.fontWeight = 'bold';
         document.querySelector(playerID).innerHTML = "You are Player " + m_playerHolder;//For scoreboard
+        m_playerTable.innerHTML = "Your Table";
     }
 }
 
