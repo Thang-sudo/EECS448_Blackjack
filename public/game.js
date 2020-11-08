@@ -12,6 +12,7 @@ let m_playerHolder = 0;
 let playerHandSum = 0
 let dealerHandSum = 0
 let numOfAce = 0
+let nextButton = document.getElementById('nextTurn')
 let hitButton = document.getElementById('hitButton')
 let stayButton = document.getElementById('stayButton')
 let oneChip = document.getElementById('oneChips')
@@ -24,14 +25,15 @@ let playerNum = 0;
 let enemyNum = 0;
 let ready = false;
 let enemyReady = false;
-let allPlayerStay = [false, false];
-
-hitButton.addEventListener("click", Hit)
+let allPlayerStay;
+let stayCount = 0;
 function startSinglePlayerMode(){
     mode = "singleplayer";
     console.log(mode)
     dealerDraw();
     stayButton.addEventListener("click", Stay)
+    hitButton.addEventListener("click", Hit)
+    nextButton.addEventListener("click", startNextTurn)
 }
 
 function startMultiPlayerMode(){
@@ -51,6 +53,12 @@ function startMultiPlayerMode(){
         }
     })
     // Manange player connection on client-side
+
+    socket.on('player-connection', number =>{
+        console.log(`Player ${number} has connected` )
+        playerConnectionStatus(number);
+    })
+
     socket.on('player1-connected', number =>{
         let player = `#player${parseInt(number) + 1}`
         document.querySelector(`${player} .connected span`).classList.toggle('green');
@@ -60,13 +68,40 @@ function startMultiPlayerMode(){
         let player = `#player${parseInt(number) + 1}`
         document.querySelector(`${player} .connected span`).classList.toggle('green');
     })
-
-    socket.on('player-connection', number =>{
-        console.log(`Player ${number} has connected` )
-        playerConnectionStatus(number);
-    })
     dealerDraw();
+    
     stayButton.addEventListener('click', () =>{stayInMultiplayer(socket)});
+    hitButton.addEventListener('click', ()=>{hitInMultiplayer(socket)})
+    nextButton.addEventListener('click', () => {
+        ready = false;
+        stayCount = 0;
+        let playerStatus = {index: playerNum, currentBalance: currentBalance, stay: false}
+        socket.emit('player-newTurn', playerStatus)
+        let player = `#player${parseInt(playerNum) + 1}`
+        document.querySelector(`${player} .stay span`).classList.remove('green');
+        document.querySelector(`${player}-balance`).innerText = "Balance: " + currentBalance 
+        startNextTurn()
+    })
+    socket.on('enemy-stay', payload =>{
+        let player = `#player${parseInt(payload.index) + 1}`
+        
+        document.querySelector(`${player} .stay span`).classList.add('green');
+        console.log("Enemy Stay")
+        if(ready && payload.stay){
+            stayCount = stayCount + 1;
+            if(stayCount > 1) return;
+            socket.emit('player-stay', playerNum)
+            getNextButton();    
+        }
+    })
+
+    socket.on('enemy-newTurn', payload =>{
+        let player = `#player${parseInt(payload.index) + 1}`
+        document.querySelector(`${player} .stay span`).classList.remove('green');
+        document.querySelector(`${player}-balance`).innerText = "Balance: " + payload.currentBalance 
+    })
+
+    
 }
 
 function playerConnectionStatus(number){
@@ -106,6 +141,40 @@ function Hit(){
     playerDrawCard(); 
 }
 
+function hitInMultiplayer(socket){
+    if(currentPhase === 'player phase'){
+        let cardDrawn = drawACard(playerHand)
+        playerHand.push(cardDrawn)
+        let cardLabel = cardDrawn.slice(0,-1)
+        let cardNum = 0
+        if(cardLabel === 'J' || cardLabel === 'Q' || cardLabel === 'K' ){
+            cardNum = 10
+            playerHandSum = cardNum + playerHandSum
+        }
+        else if(cardLabel === 'A'){
+            console.log("Drew " + cardLabel)
+            numOfAce = numOfAce + 1;
+            if(playerHandSum + 11 > 21){
+                cardNum = 1
+                numOfAce = numOfAce - 1;
+            }
+            else{
+                cardNum = 11
+            }
+            playerHandSum = playerHandSum + cardNum
+        }
+        else{
+            cardNum = parseInt(cardLabel)
+            playerHandSum = cardNum + playerHandSum
+        }
+        
+        console.log(playerHandSum)
+        let imgName = cardDrawn+'.png'
+        document.querySelector('#player-hand').innerHTML += "<div class='card-player'><img class = 'card-img' src = 'image/cards/"+imgName+"'></div>"
+    }
+    handCheck(socket)
+}
+
 function playerDrawCard(){
     if(currentPhase === 'player phase'){
         let cardDrawn = drawACard(playerHand)
@@ -137,51 +206,76 @@ function playerDrawCard(){
         let imgName = cardDrawn+'.png'
         document.querySelector('#player-hand').innerHTML += "<div class='card-player'><img class = 'card-img' src = 'image/cards/"+imgName+"'></div>"
     }
-    handCheck(playerHand)
-}
-
-// Player chooses to stay
-function Stay(){
-    revealDealerHand()
-    if(dealerHandSum > 21 || playerHandSum > dealerHandSum){
-        console.log("Player won this round")
-        document.getElementById('message').innerText = 'Player won this round'
-        currentBalance = currentBalance + betAmount * 2
-    }
-    else if(playerHandSum === dealerHandSum){
-        document.getElementById('message').innerText = "It's a tie"
-        console.log("It's a tie")
-        currentBalance = currentBalance + betAmount
-    }
-    else{
-        document.getElementById('message').innerText = 'Dealer won this round'
-        console.log("Dealer won this round")
-    }
-    getNextButton()
-    checkWinCondition()
+    handCheck()
 }
 
 // Player in multiple player mode hits stay
 function stayInMultiplayer(socket){
     console.log(`Player ${playerNum} has stayed`)
+    document.querySelector(`#player${parseInt(playerNum) + 1} .stay span`).classList.toggle('green');
     socket.emit('player-stay', playerNum);
-    socket.on('enemy-stay',() =>{
-        document.querySelector(`${player} .stay span`).classList.toggle('green');
-    })
-    Stay();
+    ready = true;
+    Stay(socket);
 }
 
+// Player chooses to stay
+function Stay(socket){
+
+        revealDealerHand()
+        if(dealerHandSum > 21 || playerHandSum > dealerHandSum){
+            console.log("Player won this round")
+            document.getElementById('message').innerText = 'Player won this round'
+            currentBalance = currentBalance + betAmount * 2
+        }
+        else if(playerHandSum === dealerHandSum){
+            document.getElementById('message').innerText = "It's a tie"
+            console.log("It's a tie")
+            currentBalance = currentBalance + betAmount
+        }
+        else{
+            document.getElementById('message').innerText = 'Dealer won this round'
+            console.log("Dealer won this round")
+        }
+        if(mode === "single-player"){
+            getNextButton()
+        }
+        else{
+
+        }
+        checkWinCondition()
+    
+}
+
+function checkBothPlayerStay(socket){
+    socket.emit('check-all-player-stay', true);
+    socket.on('all-stay', allStay =>{
+        if(allStay){
+            revealDealerHand();
+        }
+    })
+}
+
+
+
 // check if player is over 21
-function handCheck(){
+function handCheck(socket){
     if(playerHandSum === 21){
         console.log("Black Jack!")
         document.getElementById('message').innerText = 'Black Jack!'
         currentBalance = currentBalance + betAmount * 2
         document.getElementById('balanceText').innerText = "Current Balance:" + currentBalance + " Chips"
-        
         revealDealerHand()
         checkWinCondition()
-        getNextButton()
+        if(mode === "singleplayer"){
+            getNextButton()
+        }
+        else if (mode === "multiplayer"){
+            document.querySelector(`#player${parseInt(playerNum) + 1} .stay span`).classList.toggle('green');
+            socket.emit('player-stay', playerNum);
+            hitButton.disabled = true
+            ready = true;
+        }
+        
     }
     else if(playerHandSum > 21){
         if(numOfAce > 0){
@@ -193,18 +287,41 @@ function handCheck(){
                 document.getElementById('message').innerText = 'Busted!'
                 revealDealerHand()
                 checkWinCondition()
-                getNextButton()
+                if(mode === "singleplayer"){
+                    getNextButton()
+                }
+                else if(mode === "multiplayer"){
+                    
+                    document.querySelector(`#player${parseInt(playerNum) + 1} .stay span`).classList.toggle('green');
+                    socket.emit('player-stay', playerNum);
+                    console.log("Player get busted")
+                    // getNextButton();
+                    hitButton.disabled = true
+                    ready = true;
+                }
             }
             else{
                 return
             }
         }
         else{
+            
             document.getElementById('message').innerText = 'Busted!'
             console.log("Busted")
             revealDealerHand()
             checkWinCondition()
-            getNextButton()
+            if(mode === "singleplayer"){
+                getNextButton()
+            }
+            else if(mode === "multiplayer"){
+                document.querySelector(`#player${parseInt(playerNum) + 1} .stay span`).classList.toggle('green');
+                socket.emit('player-stay', playerNum);
+                // console.log(`Player get busted ${playerNum}`)
+                // getNextButton();
+                hitButton.disabled = true
+                ready = true;
+            }
+            
         }
     }
 }
@@ -243,6 +360,9 @@ function revealDealerHand(){
                 cardNum = parseInt(cardLabel)
                 dealerHandSum = dealerHandSum + cardNum
             }
+    }
+    if(mode === "singleplayer"){
+        getNextButton()
     }
 }
 
@@ -303,7 +423,13 @@ function startNextTurn(){
     dealerHandSum = 0
     playerHandSum = 0
     dealerDraw()
-    document.getElementById('balanceText').innerText = "Current Balance:" + currentBalance + " Chips"
+    document.getElementById('balanceText').innerText = "Current Balance:" + currentBalance + " Chips";
+    // if(mode === "multiplayer"){
+    //     console.log(socket)
+    //     socket.emit('player-newTurn', playerNum)
+    //     let player = `#player${parseInt(playerNum) + 1}`
+    //     document.querySelector(`${player} .stay span`).classList.remove('green');
+    // }
     
 }
 
