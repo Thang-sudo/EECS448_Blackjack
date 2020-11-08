@@ -37,7 +37,11 @@ function startSinglePlayerMode(){
 }
 
 function startMultiPlayerMode(){
+    
     const socket = io();
+    socket.on('enough-player',()=>{
+        document.getElementById('message').innerText = 'We already have enough players for the game'
+    })
     mode = "multiplayer";
     console.log(mode)
     socket.on('player-number', number =>{
@@ -101,7 +105,15 @@ function startMultiPlayerMode(){
         document.querySelector(`${player}-balance`).innerText = "Balance: " + payload.currentBalance 
     })
 
+    socket.on('enemy-won', payload =>{
+        document.getElementById('message').innerText = `Player ${playerNum + 1} wins`
+        document.getElementById('resetButton').style = 'inline-block'
+    })
     
+    socket.on('enemy-lose', payload =>{
+        document.getElementById('message').innerText = `Player ${playerNum + 1} loses`
+        document.getElementById('resetButton').style = 'inline-block'
+    })
 }
 
 function playerConnectionStatus(number){
@@ -131,7 +143,7 @@ function drawACard(hand){
         let randomCard = cardArray[Math.floor(Math.random()*cardArray.length)]
         let randomSuit = suitArray[Math.floor(Math.random()*suitArray.length)]
         cardDrawn = randomCard + randomSuit;
-    }while(cardDrawn in hand)
+    }while(hand.includes(cardDrawn));
     return cardDrawn
 }
 
@@ -142,6 +154,10 @@ function Hit(){
 }
 
 function hitInMultiplayer(socket){
+    playerDrawCard(socket);
+}
+
+function playerDrawCard(socket){
     if(currentPhase === 'player phase'){
         let cardDrawn = drawACard(playerHand)
         playerHand.push(cardDrawn)
@@ -175,40 +191,6 @@ function hitInMultiplayer(socket){
     handCheck(socket)
 }
 
-function playerDrawCard(){
-    if(currentPhase === 'player phase'){
-        let cardDrawn = drawACard(playerHand)
-        playerHand.push(cardDrawn)
-        let cardLabel = cardDrawn.slice(0,-1)
-        let cardNum = 0
-        if(cardLabel === 'J' || cardLabel === 'Q' || cardLabel === 'K' ){
-            cardNum = 10
-            playerHandSum = cardNum + playerHandSum
-        }
-        else if(cardLabel === 'A'){
-            console.log("Drew " + cardLabel)
-            numOfAce = numOfAce + 1;
-            if(playerHandSum + 11 > 21){
-                cardNum = 1
-                numOfAce = numOfAce - 1;
-            }
-            else{
-                cardNum = 11
-            }
-            playerHandSum = playerHandSum + cardNum
-        }
-        else{
-            cardNum = parseInt(cardLabel)
-            playerHandSum = cardNum + playerHandSum
-        }
-        
-        console.log(playerHandSum)
-        let imgName = cardDrawn+'.png'
-        document.querySelector('#player-hand').innerHTML += "<div class='card-player'><img class = 'card-img' src = 'image/cards/"+imgName+"'></div>"
-    }
-    handCheck()
-}
-
 // Player in multiple player mode hits stay
 function stayInMultiplayer(socket){
     console.log(`Player ${playerNum} has stayed`)
@@ -238,11 +220,12 @@ function Stay(socket){
         }
         if(mode === "single-player"){
             getNextButton()
+            checkWinCondition()
         }
-        else{
-
+        else if(mode === "multiplayer"){
+            checkWinCondition(socket);
         }
-        checkWinCondition()
+        
     
 }
 
@@ -265,13 +248,15 @@ function handCheck(socket){
         currentBalance = currentBalance + betAmount * 2
         document.getElementById('balanceText').innerText = "Current Balance:" + currentBalance + " Chips"
         revealDealerHand()
-        checkWinCondition()
+        
         if(mode === "singleplayer"){
+            checkWinCondition()
             getNextButton()
         }
         else if (mode === "multiplayer"){
             document.querySelector(`#player${parseInt(playerNum) + 1} .stay span`).classList.toggle('green');
             socket.emit('player-stay', playerNum);
+            checkWinCondition(socket)
             hitButton.disabled = true
             ready = true;
         }
@@ -286,8 +271,9 @@ function handCheck(socket){
                 console.log("Busted")
                 document.getElementById('message').innerText = 'Busted!'
                 revealDealerHand()
-                checkWinCondition()
+                
                 if(mode === "singleplayer"){
+                    checkWinCondition()
                     getNextButton()
                 }
                 else if(mode === "multiplayer"){
@@ -295,6 +281,7 @@ function handCheck(socket){
                     document.querySelector(`#player${parseInt(playerNum) + 1} .stay span`).classList.toggle('green');
                     socket.emit('player-stay', playerNum);
                     console.log("Player get busted")
+                    checkWinCondition(socket);
                     // getNextButton();
                     hitButton.disabled = true
                     ready = true;
@@ -309,8 +296,9 @@ function handCheck(socket){
             document.getElementById('message').innerText = 'Busted!'
             console.log("Busted")
             revealDealerHand()
-            checkWinCondition()
+            
             if(mode === "singleplayer"){
+                checkWinCondition()
                 getNextButton()
             }
             else if(mode === "multiplayer"){
@@ -318,6 +306,7 @@ function handCheck(socket){
                 socket.emit('player-stay', playerNum);
                 // console.log(`Player get busted ${playerNum}`)
                 // getNextButton();
+                checkWinCondition(socket);
                 hitButton.disabled = true
                 ready = true;
             }
@@ -501,7 +490,7 @@ function changesWhenBetCalled(){
 }
 
 // Check for the win condition
-function checkWinCondition(){
+function checkWinCondition(socket){
     if(currentBalance >= 100){
         console.log("Player wins")
         document.getElementById('message').innerText = 'Player wins'
@@ -512,7 +501,14 @@ function checkWinCondition(){
         fiveChips.disabled = true
         tenChips.disabled = true
         fifteenChips.disabled = true
-        document.getElementById('resetButton').style = 'inline-block'
+        if(mode === "singleplayer"){
+            document.getElementById('resetButton').style = 'inline-block'
+        }
+        else if(mode === "multiplayer"){
+            socket.emit('player-win', playerNum);
+            document.getElementById('message').innerText = `Player ${playerNum} wins`
+            document.getElementById('resetButton').style = 'inline-block'
+        }
     }
     else if(currentBalance <= 0){
         console.log("Player lost")
@@ -524,7 +520,14 @@ function checkWinCondition(){
         fiveChips.disabled = true
         tenChips.disabled = true
         fifteenChips.disabled = true
-        document.getElementById('resetButton').style = 'inline-block'
+        if(mode === "singleplayer"){
+            document.getElementById('resetButton').style = 'inline-block'
+        }
+        else if(mode === "multiplayer"){
+            socket.emit('player-lose', playerNum);
+            document.getElementById('message').innerText = `Player ${playerNum + 1} loses`
+            document.getElementById('resetButton').style = 'inline-block'
+        }
     }
 }
 

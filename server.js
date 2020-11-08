@@ -40,6 +40,7 @@ io.on('connection', socket =>{
    socket.emit('player-number', playerIndex);
    // Ignore player 3
    if(playerIndex === -1){
+      socket.emit('enough-player', 3);
       return
    }
    console.log(`Player ${playerIndex} has connected`)
@@ -68,8 +69,17 @@ io.on('connection', socket =>{
    socket.on('player-newTurn', num =>{
       console.log(`Player ${num} started new turn`)
       connections[num] = {stay: false, currentBalance: num.currentBalance, index: playerIndex};
-      console.log(connections);
       socket.broadcast.emit('enemy-newTurn', connections[num])
+   })
+
+   socket.on('player-win', num =>{
+      console.log(`Player ${num} has won`)
+      socket.broadcast.emit('enemy-win', connections[num])
+   })
+
+   socket.on('player-lose', num =>{
+      console.log(`Player ${num} has lost`)
+      socket.broadcast.emit('enemy-lose', connections[num])
    })
 
 })
