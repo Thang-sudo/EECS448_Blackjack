@@ -21,6 +21,7 @@ let fiveChips = document.getElementById('fiveChips')
 let tenChips = document.getElementById('tenChips')
 let fifteenChips = document.getElementById('fifteenChips')
 let clearBet = document.getElementById('clearBet')
+let resetButton = document.getElementById('ressetButton')
 let currentPlayer = 'user';
 let mode = ""
 let playerNum = 0;
@@ -534,7 +535,7 @@ function checkWinCondition(socket){
         document.getElementById('message').innerText = 'Player wins'
         hitButton.style.display = "none"
         stayButton.style.display = "none"
-        dealButtone.style.display = "none"
+        dealButton.style.display = "none"
         document.getElementById('nextTurn').style.display = "none"
         oneChip.disabled = true
         fiveChips.disabled = true
@@ -555,7 +556,7 @@ function checkWinCondition(socket){
         document.getElementById('message').innerText = 'Player loses'
         hitButton.style.display = "none"
         stayButton.style.display = "none"
-        dealButtone.style.display = "none"
+        dealButton.style.display = "none"
         document.getElementById('nextTurn').style.display = "none"
         oneChip.disabled = true
         fiveChips.disabled = true
