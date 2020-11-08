@@ -413,14 +413,9 @@ function startNextTurn(){
     dealerHand = []
     dealerHandSum = 0
     playerHandSum = 0
+    clearBet.disabled = false;
     document.getElementById('balanceText').innerText = "Current Balance:" + currentBalance + " Chips";
     document.getElementById('betTotal').innerText = "Bet Total:" + betAmount + " Chips"
-    // if(mode === "multiplayer"){
-    //     console.log(socket)
-    //     socket.emit('player-newTurn', playerNum)
-    //     let player = `#player${parseInt(playerNum) + 1}`
-    //     document.querySelector(`${player} .stay span`).classList.remove('green');
-    // }
     
 }
 
