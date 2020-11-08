@@ -58,16 +58,21 @@ io.on('connection', socket =>{
    
 
    socket.on('player-stay', num =>{
-      
-      let allPlayerStay = false;
+      console.log(`Player ${num} has stayed`)
       connections[num] = true;
-      // Tell your oponent you stay
-      socket.broadcast.emit('enemy-ready', playerIndex)
+      // broad cast to others players you are ready
+      let player = {index: playerIndex, stay: true}
+      socket.broadcast.emit('enemy-stay', player)
       // Check if all players stay
-      if(connections[0] && connections[1]){
-         allPlayerStay = true;
-         socket.emit('all-stay', allPlayerStay);
-      }
+      
       
    })
+
+   socket.on('player-newTurn', num =>{
+      console.log(`Player ${num} started new turn`)
+      connections[num] = false;
+      let player = {index: playerIndex, newTurn: true}
+      socket.broadcast.emit('enemy-newTurn', player)
+   })
+
 })
