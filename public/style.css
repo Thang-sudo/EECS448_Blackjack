@@ -197,12 +197,17 @@ body
     text-decoration: none;
     outline: none;
     color: #fff;
-    background-color: #00ccff;
+    background-color: #6c757d;
     border: none;
+    transition-duration: 0.3s;
     border-radius: 15px;
     /* box-shadow: 0 9px #999; */
   }
 
+  #resetButton:hover{
+    background-color: #fff;
+    color: #6c757d;
+  }
   #resetButton:active{
     background-color: #3e8e41;
     box-shadow: 0 5px #666;
@@ -432,3 +437,22 @@ body
   text-align: center;
 }
 
+/* Multiplayer Mode */
+#player-info{
+  display: flex;
+}
+
+.connected, .stay{
+  font-weight: normal;
+}
+
+.connected span, .stay span{
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background: red;
+}
+
+span.green{
+  background: green;
+}
