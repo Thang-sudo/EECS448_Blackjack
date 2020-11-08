@@ -43,7 +43,10 @@
                 <button id ="fiveChips" onclick="bet('fiveChips')">5 Chips</button>
                 <button id ="tenChips" onclick="bet('tenChips')">10 Chips</button>
                 <button id ="fifteenChips" onclick="bet('fifteenChips')">15 Chips</button>
+                <button id ="clearBet" onclick="bet('clearBet')">Clear Bet</button>
             </div>
+            <!-- Player's current-hand bet total -->
+            <p id= "betTotal">Bet Total: <strong id = "betTotal">0</strong> Chips</p>
         </div>
         <div class="table-dealer">
             <p id="dealerTable">Dealer's Table</p>
@@ -61,6 +64,7 @@
         <button id = "hitButton" style="display: none;" >Hit</button>
         <button id = "stayButton" style="display: none;">Stay</button>
         <button id = "nextTurn" onclick="startNextTurn()" style="display: none;">Next</button>
+        <button id = "dealButton" style="display: none;">Deal</button>
         <button id = "resetButton" style="float:right; display:none"  onclick = "location.reload()">Reset</button>
         <button id = "backButton" style="float:right" onclick = "location.href='/index.html'">Back</button>
 </body>

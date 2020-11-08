@@ -15,10 +15,12 @@ let numOfAce = 0
 let nextButton = document.getElementById('nextTurn')
 let hitButton = document.getElementById('hitButton')
 let stayButton = document.getElementById('stayButton')
+let dealButton = document.getElementById('dealButton')
 let oneChip = document.getElementById('oneChips')
 let fiveChips = document.getElementById('fiveChips')
 let tenChips = document.getElementById('tenChips')
 let fifteenChips = document.getElementById('fifteenChips')
+let clearBet = document.getElementById('clearBet')
 let currentPlayer = 'user';
 let mode = ""
 let playerNum = 0;
@@ -30,10 +32,10 @@ let stayCount = 0;
 function startSinglePlayerMode(){
     mode = "singleplayer";
     console.log(mode)
-    dealerDraw();
     stayButton.addEventListener("click", Stay)
     hitButton.addEventListener("click", Hit)
     nextButton.addEventListener("click", startNextTurn)
+    dealButton.addEventListener("click", changesWhenBetCalled)
 }
 
 function startMultiPlayerMode(){
@@ -72,8 +74,8 @@ function startMultiPlayerMode(){
         let player = `#player${parseInt(number) + 1}`
         document.querySelector(`${player} .connected span`).classList.toggle('green');
     })
-    dealerDraw();
     
+    dealButton.addEventListener("click", changesWhenBetCalled)
     stayButton.addEventListener('click', () =>{stayInMultiplayer(socket)});
     hitButton.addEventListener('click', ()=>{hitInMultiplayer(socket)})
     nextButton.addEventListener('click', () => {
@@ -397,6 +399,7 @@ function getNextButton(){
 // Start a new turn when user presses next button
 function startNextTurn(){
     // clear player hand and creat new hand for dealer
+    betAmount = 0
     disableBetAmount(currentBalance);
     document.getElementById('message').innerText = 'Choose your bet'
     document.querySelector('#player-hand').innerHTML = " "
@@ -404,13 +407,12 @@ function startNextTurn(){
     document.getElementById('nextTurn').style.display = "none"
     hitButton.style.display = "none"
     stayButton.style.display = "none"
-    
     playerHand = []
     dealerHand = []
     dealerHandSum = 0
     playerHandSum = 0
-    dealerDraw()
     document.getElementById('balanceText').innerText = "Current Balance:" + currentBalance + " Chips";
+    document.getElementById('betTotal').innerText = "Bet Total:" + betAmount + " Chips"
     // if(mode === "multiplayer"){
     //     console.log(socket)
     //     socket.emit('player-newTurn', playerNum)
@@ -458,34 +460,73 @@ function dealerDraw(){
 
 // Player chooses an amount to bet, then player can start to hit
 function bet(id){
-    if( (id === 'oneChip')){
-        betAmount = 1
+    if(id === 'oneChip'){
+        if((currentBalance-betAmount) >= 1){
+          betAmount = betAmount + 1
+        }
+        else{
+          console.log("Insufficient funds")
+        }
     }
-    else if((currentBalance >= 5) && (id === 'fiveChips')){
-        betAmount = 5
+    else if(id === 'fiveChips'){
+        if((currentBalance-betAmount) >= 5){
+          betAmount = betAmount + 5
+        }
+        else{
+          console.log("Insufficient funds")
+        }
     }
-    else if((currentBalance >= 10) && (id === 'tenChips')){
-        betAmount = 10
+    else if(id === 'tenChips'){
+        if((currentBalance-betAmount) >= 10){
+          betAmount = betAmount + 10
+        }
+        else{
+          console.log("Insufficient funds")
+        }
     }
-    else if((currentBalance >= 15) && (id === 'fifteenChips')){
-        betAmount = 15
+    else if(id === 'fifteenChips'){
+        if((currentBalance-betAmount) >= 15){
+          betAmount = betAmount + 15
+        }
+        else{
+          console.log("Insufficient funds")
+        }
     }
-    console.log(betAmount)
-    currentBalance = currentBalance - betAmount
-    document.getElementById('balanceText').innerText = "Current Balance:" + currentBalance + " Chips"
-    changesWhenBetCalled()
+    else if(id === 'clearBet'){
+      betAmount = 0;
+    }
+    document.getElementById('betTotal').innerText = "Bet Total:" + betAmount + " Chips"
+    if(betAmount <= 0)
+    {
+      dealButton.style.display = "none"
+      dealButton.disabled = true
+    }
+    else if(betAmount > 0)
+    {
+      dealButton.style.display = "inline-block"
+      dealButton.disabled = false
+    }
 }
 
 // Able Hit and Stay after player bet
 function changesWhenBetCalled(){
+    console.log(betAmount)
+    currentBalance = currentBalance - betAmount
+    document.getElementById('balanceText').innerText = "Current Balance:" + currentBalance + " Chips"
     hitButton.style.display = "inline-block"
     stayButton.style.display = "inline-block"
+    dealButton.style.display = "none"
     hitButton.disabled = false
     stayButton.disabled = false
+    dealButton.disabled = true
     oneChip.disabled = true
     fiveChips.disabled = true
     tenChips.disabled = true
     fifteenChips.disabled = true
+    clearBet.disabled = true
+    playerDrawCard()
+    dealerDraw()
+    playerDrawCard()
     document.getElementById('message').innerText = 'Hit or Stay'
     
 }
@@ -497,11 +538,13 @@ function checkWinCondition(socket){
         document.getElementById('message').innerText = 'Player wins'
         hitButton.style.display = "none"
         stayButton.style.display = "none"
+        dealButtone.style.display = "none"
         document.getElementById('nextTurn').style.display = "none"
         oneChip.disabled = true
         fiveChips.disabled = true
         tenChips.disabled = true
         fifteenChips.disabled = true
+        clearBet.disabled = true
         if(mode === "singleplayer"){
             document.getElementById('resetButton').style = 'inline-block'
         }
@@ -516,11 +559,13 @@ function checkWinCondition(socket){
         document.getElementById('message').innerText = 'Player loses'
         hitButton.style.display = "none"
         stayButton.style.display = "none"
+        dealButtone.style.display = "none"
         document.getElementById('nextTurn').style.display = "none"
         oneChip.disabled = true
         fiveChips.disabled = true
         tenChips.disabled = true
         fifteenChips.disabled = true
+        clearBet.disabled = true
         if(mode === "singleplayer"){
             document.getElementById('resetButton').style = 'inline-block'
         }
