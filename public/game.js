@@ -414,12 +414,6 @@ function startNextTurn(){
     clearBet.disabled = false;
     document.getElementById('balanceText').innerText = "Current Balance:" + currentBalance + " Chips";
     document.getElementById('betTotal').innerText = "Bet Total:" + betAmount + " Chips"
-    // if(mode === "multiplayer"){
-    //     console.log(socket)
-    //     socket.emit('player-newTurn', playerNum)
-    //     let player = `#player${parseInt(playerNum) + 1}`
-    //     document.querySelector(`${player} .stay span`).classList.remove('green');
-    // }
     
 }
 
@@ -525,9 +519,9 @@ function changesWhenBetCalled(){
     tenChips.disabled = true
     fifteenChips.disabled = true
     clearBet.disabled = true
-    // playerDrawCard()
+    playerDrawCard()
     dealerDraw()
-    // playerDrawCard()
+    playerDrawCard()
     document.getElementById('message').innerText = 'Hit or Stay'
     
 }
