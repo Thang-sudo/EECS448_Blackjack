@@ -411,6 +411,7 @@ function startNextTurn(){
     dealerHand = []
     dealerHandSum = 0
     playerHandSum = 0
+    clearBet.disabled = false;
     document.getElementById('balanceText').innerText = "Current Balance:" + currentBalance + " Chips";
     document.getElementById('betTotal').innerText = "Bet Total:" + betAmount + " Chips"
     // if(mode === "multiplayer"){
@@ -524,9 +525,9 @@ function changesWhenBetCalled(){
     tenChips.disabled = true
     fifteenChips.disabled = true
     clearBet.disabled = true
-    playerDrawCard()
+    // playerDrawCard()
     dealerDraw()
-    playerDrawCard()
+    // playerDrawCard()
     document.getElementById('message').innerText = 'Hit or Stay'
     
 }
