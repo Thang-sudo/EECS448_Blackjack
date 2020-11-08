@@ -220,7 +220,7 @@ function Stay(socket){
             document.getElementById('message').innerText = 'Dealer won this round'
             console.log("Dealer won this round")
         }
-        if(mode === "single-player"){
+        if(mode === "singleplayer"){
             getNextButton()
             checkWinCondition()
         }
