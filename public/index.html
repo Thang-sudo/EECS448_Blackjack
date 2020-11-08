@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Mocha</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="mocha.css" />
-  </head>
-  <body>
-    <div id="mocha"></div>
-    <script src="mocha.js"></script>
-    <script>
-      mocha.setup('bdd');
-    </script>
-    <script src="tests.spec.js"></script>
-    <script>
-      mocha.run();
-    </script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css" />
+    <script src="/socket.io/socket.io.js"></script>
+    <title>Team 6 Project 3</title>
+    <!-- <script type="module" src = "game.js"></script> -->
+</head>
+<header>
+    <h2>BlackJack</h2>
+</header>
+<body>
+    <button id="btn-single" style="display:block;margin:0 auto"  onclick="location.href = 'game.html'" >Single player</button>
+    &nbsp;
+    <button id="btn-multi" style="display:block;margin:0 auto" onclick = "location.href = 'multiplayer.html'">Multiplayer</button>
+    &nbsp;
+    <button id="gamerule" style="display:block;margin:0 auto" onclick = "location.href = 'gamerule.html'">Rules</button>
+</body>
 </html>

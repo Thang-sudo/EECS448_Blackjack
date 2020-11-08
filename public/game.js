@@ -7,7 +7,7 @@ let cardArray = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K
 let suitArray = ['D', 'H', 'S', 'C']
 let playerHand = []//Arbitrary number
 let dealerHand = []//Arbitrary number
-let mode = ""
+
 let playerHandSum = 0
 let dealerHandSum = 0
 let numOfAce = 0
@@ -17,23 +17,72 @@ let oneChip = document.getElementById('oneChips')
 let fiveChips = document.getElementById('fiveChips')
 let tenChips = document.getElementById('tenChips')
 let fifteenChips = document.getElementById('fifteenChips')
+let currentPlayer = 'user';
+let mode = ""
+let playerNum = 0;
+let enemyNum = 0;
+let ready = false;
+let enemyReady = false;
+let allPlayerStay = [false, false];
 
+hitButton.addEventListener("click", Hit)
 function startSinglePlayerMode(){
-    mode = "singleplayer"
-    window.location.href = "game.html"
+    mode = "singleplayer";
+    console.log(mode)
+    dealerDraw();
+    stayButton.addEventListener("click", Stay)
 }
 
 function startMultiPlayerMode(){
-    mode = "multiplayer"
-    window.location.href = "game.html"
+    const socket = io();
+    mode = "multiplayer";
+    console.log(mode)
+    socket.on('player-number', number =>{
+        if(number !== -1){
+            playerNum = parseInt(number);
+            if(playerNum === 1) {  
+                enemyNum = 0;
+            }
+            else{
+                enemyNum = 1;
+            }
+            playerConnectionStatus(playerNum);
+        }
+    })
+    // Manange player connection on client-side
+    socket.on('player1-connected', number =>{
+        let player = `#player${parseInt(number) + 1}`
+        document.querySelector(`${player} .connected span`).classList.toggle('green');
+    })
+
+    socket.on('player2-connected', number =>{
+        let player = `#player${parseInt(number) + 1}`
+        document.querySelector(`${player} .connected span`).classList.toggle('green');
+    })
+
+    socket.on('player-connection', number =>{
+        console.log(`Player ${number} has connected` )
+        playerConnectionStatus(number);
+    })
+    dealerDraw();
+    stayButton.addEventListener('click', () =>{stayInMultiplayer(socket)});
+}
+
+function playerConnectionStatus(number){
+    let player = `#player${parseInt(number) + 1}`
+    document.querySelector(`${player} .connected span`).classList.toggle('green');
+    // Tell what player we are
+    if(parseInt(number) === playerNum){
+        console.log(`You are player ${playerNum + 1}`);
+        document.querySelector(player).style.fontWeight = 'bold';
+    }
 }
 
 function startGameRule(){
     window.location.href = "gamerule.html"
 }
 
-hitButton.addEventListener("click", Hit)
-stayButton.addEventListener("click", Stay)
+
 // Draw card to hand
 function drawACard(hand){
     let cardDrawn = ''
@@ -48,6 +97,10 @@ function drawACard(hand){
 // add card to player hand
 function Hit(){
     // console.log(mode)
+    playerDrawCard(); 
+}
+
+function playerDrawCard(){
     if(currentPhase === 'player phase'){
         let cardDrawn = drawACard(playerHand)
         playerHand.push(cardDrawn)
@@ -100,6 +153,16 @@ function Stay(){
     }
     getNextButton()
     checkWinCondition()
+}
+
+// Player in multiple player mode hits stay
+function stayInMultiplayer(socket){
+    console.log(`Player ${playerNum} has stayed`)
+    socket.emit('player-stay', playerNum);
+    socket.on('enemy-stay',() =>{
+        document.querySelector(`${player} .stay span`).classList.toggle('green');
+    })
+    Stay();
 }
 
 // check if player is over 21

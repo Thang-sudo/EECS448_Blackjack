@@ -4,20 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css"> 
-    <title>Document</title>
+    <script src="/socket.io/socket.io.js"></script>
     
+    <title>Document</title>
     <!-- <link rel="stylesheet" href="game.css" /> -->
     
 </head>
-<body onload = 'startSinglePlayerMode()'>
-    <div class="title">
-        <h1></h1>
+<body onload = 'startMultiPlayerMode()'>
+</br>
+    <div id="player-info">
+        <div id="player1">
+            <p>Player 1</p>
+            <p class="connected">Connected <span></span></p>
+            <p class="stay">Stay<span></span></p>
+            <p>Current Balance <span></span></p>
+        </div>
+        <div id="player2">
+            <p>Player 2</p>
+            <p class="connected">Connected <span></span></p>
+            <p class="stay">Stay<span></span></p>
+            <p>Current Balance <span></span></p>
+        </div>
     </div>
-</br>
-</br>
-</br>
-</br>
-</br>
+    
     <!-- Main table -->
     <div class="table">
         <div class="table-player">
@@ -58,7 +67,7 @@
 
 <!-- show the game message -->
 <footer id="MessageBoard" style="text-align: center;">
-    <h1>Blackjack (Singleplayer)</h1>
+    <h1>Blackjack (Mutliplayer)</h1>
 </footer>
 <script type="text/javascript" src = "game.js"></script>
 </html>
