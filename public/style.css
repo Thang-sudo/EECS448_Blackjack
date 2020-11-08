@@ -23,6 +23,27 @@ body
     background-size: cover;
     overflow: hidden;
 }
+#test {
+  display: inline-block;
+  padding: 15px 42px;
+  font-size: 24px;
+  font-weight: 400;
+  cursor: pointer;
+  text-align: center;   
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color:#28a745;
+  border: none;
+  border-radius: 15px;
+  transition-duration: 0.3s;
+  /* box-shadow: 0 9px #999; */
+}
+
+#test:hover {
+  background-color: white;
+  color: #28a745;
+}
 
 #btn-single {
     display: inline-block;
