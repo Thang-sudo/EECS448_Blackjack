@@ -160,6 +160,32 @@ body
     transform: translateY(4px);
   }
 
+  #dealButton{
+    padding: 15px 35px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;   
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #343a40;
+    border: none;
+    border-radius: 15px;
+    transition-duration: 0.3s;
+    /* box-shadow: 0 9px #999; */
+  }
+
+  #dealButton:hover{
+    color: #343a40;
+    background-color: #fff;
+  }
+
+  #dealButton:active{
+    /* background-color: #28a745; */
+    /* box-shadow: 0 5px #666; */
+    transform: translateY(4px);
+  }
+
   #backButton{
     margin-top: 5px;
     display: inline-block;
@@ -333,6 +359,28 @@ body
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
+#clearBet{
+  height: 100px;
+  width: 100px;
+  display: inline-block;
+  font-size: 15px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: lightcoral;
+  background-image: url('image/Chip0.PNG');
+  background-size: cover;
+  border: none;
+  border-radius: 50%;
+  border: 1px solid black;
+}
+
+#clearBet:active{
+  transform: translateY(4px);
+}
+
 #oneChips{
     height: 100px;
     width: 100px;
@@ -488,4 +536,61 @@ body
 
 span.green{
   background: lightgreen;
+}
+
+.ruleTable{
+  border: 1px black solid;
+  display: flex;
+  justify-content: center;
+  height: 60vh;
+  background-color: rgb(0, 126, 0);
+  color: white;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 24px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.singleplayerRuleTable{  
+  border: 1px white solid;
+  width: 100%;
+  border-bottom-left-radius: 5px;
+}
+
+.multiplayerRuleTable{  
+  border: 1px white solid;
+  width: 100%;
+  border-bottom-right-radius: 5px;
+  padding-right: 10px;
+}
+
+#blackjackRules{
+  color: white;
+  font-size: 48px;
+  text-align: center;
+  margin-top: 150px;
+  background-color: rgb(0,126,0);
+  margin-bottom: 0px;
+  border-top: solid white 1px;
+  border-right: solid white 1px;
+  border-left: solid white 1px;
+  padding: 5px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+#singleplayerRules{
+  text-align: center;
+  font-size: 30px;
+}
+
+#multiplayerRules{
+  text-align: center;
+  font-size: 30px;
+}
+#exceed21{
+  background-color: darkred;
+  padding: 2px;
+  padding-top:0px;
+  border-radius: 5px;
 }

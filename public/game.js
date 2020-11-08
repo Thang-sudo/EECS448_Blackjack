@@ -106,12 +106,12 @@ function startMultiPlayerMode(){
     })
 
     socket.on('enemy-won', payload =>{
-        document.getElementById('message').innerText = `Player ${playerNum + 1} wins`
+        document.getElementById('message').innerText = `Player ${parseInt(payload.index) + 1} wins`
         document.getElementById('resetButton').style = 'inline-block'
     })
     
     socket.on('enemy-lose', payload =>{
-        document.getElementById('message').innerText = `Player ${playerNum + 1} loses`
+        document.getElementById('message').innerText = `Player ${parseInt(payload.index) + 1} loses`
         document.getElementById('resetButton').style = 'inline-block'
     })
 }
@@ -304,8 +304,6 @@ function handCheck(socket){
             else if(mode === "multiplayer"){
                 document.querySelector(`#player${parseInt(playerNum) + 1} .stay span`).classList.toggle('green');
                 socket.emit('player-stay', playerNum);
-                // console.log(`Player get busted ${playerNum}`)
-                // getNextButton();
                 checkWinCondition(socket);
                 hitButton.disabled = true
                 ready = true;
