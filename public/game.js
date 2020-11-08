@@ -361,6 +361,9 @@ function revealDealerHand(){
                 dealerHandSum = dealerHandSum + cardNum
             }
     }
+    if(mode === "singleplayer"){
+        getNextButton()
+    }
 }
 
 function disableBetAmount(balance){
