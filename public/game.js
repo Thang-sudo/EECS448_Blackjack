@@ -65,7 +65,13 @@ function startMultiPlayerMode(){
         playerConnectionStatus(number);
     })
     dealerDraw();
+    
     stayButton.addEventListener('click', () =>{stayInMultiplayer(socket)});
+    socket.on('enemy-stay', number =>{
+        let player = `#player${parseInt(number) + 1}`
+        document.querySelector(`${player} .stay span`).classList.toggle('green');
+    })
+    
 }
 
 function playerConnectionStatus(number){
@@ -158,10 +164,8 @@ function Stay(){
 // Player in multiple player mode hits stay
 function stayInMultiplayer(socket){
     console.log(`Player ${playerNum} has stayed`)
+    document.querySelector(`#player${parseInt(playerNum) + 1} .stay span`).classList.toggle('green');
     socket.emit('player-stay', playerNum);
-    socket.on('enemy-stay',() =>{
-        document.querySelector(`${player} .stay span`).classList.toggle('green');
-    })
     Stay();
 }
 

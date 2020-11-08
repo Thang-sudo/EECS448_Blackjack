@@ -55,17 +55,19 @@ io.on('connection', socket =>{
       connections[playerIndex] = null;
       socket.broadcast.emit('player-connection', playerIndex)
    })
+   
 
    socket.on('player-stay', num =>{
-      console.log(`Player ${num} has stayed`)
+      
       let allPlayerStay = false;
       connections[num] = true;
       // Tell your oponent you stay
-      socket.emit('enemy-stay', playerIndex);
+      socket.broadcast.emit('enemy-ready', playerIndex)
       // Check if all players stay
       if(connections[0] && connections[1]){
          allPlayerStay = true;
          socket.emit('all-stay', allPlayerStay);
       }
+      
    })
 })
