@@ -72,12 +72,21 @@ function startMultiPlayerMode(){
     
     stayButton.addEventListener('click', () =>{stayInMultiplayer(socket)});
     hitButton.addEventListener('click', ()=>{hitInMultiplayer(socket)})
-    nextButton.addEventListener('click', () => {startNextTurn(socket)})
+    nextButton.addEventListener('click', () => {
+        ready = false;
+        stayCount = 0;
+        let playerStatus = {index: playerNum, currentBalance: currentBalance, stay: false}
+        socket.emit('player-newTurn', playerStatus)
+        let player = `#player${parseInt(playerNum) + 1}`
+        document.querySelector(`${player} .stay span`).classList.remove('green');
+        document.querySelector(`${player}-balance`).innerText = "Balance: " + currentBalance 
+        startNextTurn()
+    })
     socket.on('enemy-stay', payload =>{
         let player = `#player${parseInt(payload.index) + 1}`
         
         document.querySelector(`${player} .stay span`).classList.add('green');
-        
+        console.log("Enemy Stay")
         if(ready && payload.stay){
             stayCount = stayCount + 1;
             if(stayCount > 1) return;
@@ -89,6 +98,7 @@ function startMultiPlayerMode(){
     socket.on('enemy-newTurn', payload =>{
         let player = `#player${parseInt(payload.index) + 1}`
         document.querySelector(`${player} .stay span`).classList.remove('green');
+        document.querySelector(`${player}-balance`).innerText = "Balance: " + payload.currentBalance 
     })
 
     
@@ -281,7 +291,7 @@ function handCheck(socket){
                     getNextButton()
                 }
                 else if(mode === "multiplayer"){
-                    console.log(socket)
+                    
                     document.querySelector(`#player${parseInt(playerNum) + 1} .stay span`).classList.toggle('green');
                     socket.emit('player-stay', playerNum);
                     console.log("Player get busted")
@@ -304,7 +314,6 @@ function handCheck(socket){
                 getNextButton()
             }
             else if(mode === "multiplayer"){
-                console.log(socket)
                 document.querySelector(`#player${parseInt(playerNum) + 1} .stay span`).classList.toggle('green');
                 socket.emit('player-stay', playerNum);
                 // console.log(`Player get busted ${playerNum}`)
@@ -396,7 +405,7 @@ function getNextButton(){
 }
 
 // Start a new turn when user presses next button
-function startNextTurn(socket){
+function startNextTurn(){
     // clear player hand and creat new hand for dealer
     disableBetAmount(currentBalance);
     document.getElementById('message').innerText = 'Choose your bet'
@@ -412,12 +421,12 @@ function startNextTurn(socket){
     playerHandSum = 0
     dealerDraw()
     document.getElementById('balanceText').innerText = "Current Balance:" + currentBalance + " Chips";
-    if(mode === "multiplayer"){
-        console.log(socket)
-        socket.emit('player-newTurn', playerNum)
-        let player = `#player${parseInt(playerNum) + 1}`
-        document.querySelector(`${player} .stay span`).classList.remove('green');
-    }
+    // if(mode === "multiplayer"){
+    //     console.log(socket)
+    //     socket.emit('player-newTurn', playerNum)
+    //     let player = `#player${parseInt(playerNum) + 1}`
+    //     document.querySelector(`${player} .stay span`).classList.remove('green');
+    // }
     
 }
 
