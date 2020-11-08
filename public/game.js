@@ -258,6 +258,7 @@ function handCheck(socket){
             socket.emit('player-stay', playerNum);
             checkWinCondition(socket)
             hitButton.disabled = true
+            stayButton.disabled = true
             ready = true;
         }
         
@@ -284,6 +285,7 @@ function handCheck(socket){
                     checkWinCondition(socket);
                     // getNextButton();
                     hitButton.disabled = true
+                    stayButton.disabled = true
                     ready = true;
                 }
             }
@@ -306,6 +308,7 @@ function handCheck(socket){
                 socket.emit('player-stay', playerNum);
                 checkWinCondition(socket);
                 hitButton.disabled = true
+                stayButton.disabled = true
                 ready = true;
             }
             
