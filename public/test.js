@@ -3,6 +3,7 @@ let suitArray = ['D', 'H', 'S', 'C']
 let playerHand = []
 let dealerHand = []
 let tests = []
+let allPassed = true
 function drawACard(array){
     let cardDrawn = ''
     do{
@@ -341,6 +342,7 @@ function test20(){
 }
 
 function runTests(){
+    let testResults = document.getElementById('testResults')
     if(test01()){
         console.log("Test01: card is drawn from deck: PASSED")
         tests.push("Test01: card is drawn from deck: PASSED")
@@ -348,6 +350,7 @@ function runTests(){
     else{
         console.log("Test01: card is drawn from deck: FAILED")
         tests.push("Test01: card is drawn from deck: FAILED")
+        allPassed = false
     }
 
     if(test02()){
@@ -357,6 +360,7 @@ function runTests(){
     else{
         console.log("Test02: player draws 3 different cards: FAILED")
         tests.push("Test02: player draws 3 different cards: FAILED")
+        allPassed = false
     }
 
     if(test03()){
@@ -366,6 +370,7 @@ function runTests(){
     else{
         console.log("Test03: player draws 10 different cards: FAILED")
         tests.push("Test03: player draws 10 different cards: FAILED")
+        allPassed = false
     }
 
     if(test04()){
@@ -375,6 +380,7 @@ function runTests(){
     else{
         console.log("Test04: player draws 52 different cards: FAILED")
         tests.push("Test04: player draws 52 different cards: FAILED")
+        allPassed = false
     }
 
     if(test05()){
@@ -384,6 +390,7 @@ function runTests(){
     else{
         console.log("Test05: dealer draws 52 different cards: FAILED")
         tests.push("Test05: dealer draws 52 different cards: FAILED")
+        allPassed = false
     }
 
     if(test06()){
@@ -393,6 +400,7 @@ function runTests(){
     else{
         console.log("Test06: player hand is 5D 7H 6S, the total should be 18: FAILED")
         tests.push("Test06: player hand is 5D 7H 6S, the total should be 18: FAILED")
+        allPassed = false
     }
 
     if(test07()){
@@ -402,6 +410,7 @@ function runTests(){
     else{
         console.log("Test07: player hand is 6D 9H 6S, the total should be 21: FAILED")
         tests.push("Test07: player hand is 6D 9H 6S, the total should be 21: FAILED")
+        allPassed = false
     }
 
     if(test08()){
@@ -411,6 +420,7 @@ function runTests(){
     else{
         console.log("Test08: player hand is AD 4H 6S, the total should be 21: FAILED")
         tests.push("Test08: player hand is AD 4H 6S, the total should be 21: FAILED")
+        allPassed = false
     }
 
     if(test09()){
@@ -420,6 +430,7 @@ function runTests(){
     else{
         console.log("Test09: player hand is KD QH AS, the total should be 21: FAILED")
         tests.push("Test09: player hand is KD QH AS, the total should be 21: FAILED")
+        allPassed = false
     }
 
     if(test10()){
@@ -429,6 +440,7 @@ function runTests(){
     }
     else{
         console.log("Test10: player hand is KD QH JS, the total should be 30: FAILED")
+        allPassed = false
     }
 
     if(test11()){
@@ -436,6 +448,7 @@ function runTests(){
     }
     else{
         console.log("Test11: player hand is AD AH AS AC, the total should be 14: FAILED")
+        allPassed = false
     }
 
     if(test12()){
@@ -443,6 +456,7 @@ function runTests(){
     }
     else{
         console.log("Test12: player hand is 'AD', 'KH', 'QS', 'AC', the total should be 22: FAILED")
+        allPassed = false
     }
 
     if(test13()){
@@ -450,6 +464,7 @@ function runTests(){
     }
     else{
         console.log("Test13: player hand is 'AD', 'KH', 'QS', the total should be 21: FAILED")
+        allPassed = false
     }
 
     if(test14()){
@@ -457,6 +472,7 @@ function runTests(){
     }
     else{
         console.log("Test14: player hand is 'AD', 'AH', '8S', the total should be 20: FAILED")
+        allPassed = false
     }
 
     if(test15()){
@@ -464,6 +480,7 @@ function runTests(){
     }
     else{
         console.log("Test15: player hand is 'AD', 'AH', 'AS', the total should be 13: FAILED")
+        allPassed = false
     }
 
     if(test17()){
@@ -471,12 +488,14 @@ function runTests(){
     }
     else{
         console.log("Test17: player hand is same as dealer hand, the result is tie: FAILED")
+        allPassed = false
     }
     if(test18()){
         console.log("Test18: player hand is bigger than dealer hand, player wins: PASSED")
     }
     else{
         console.log("Test18: player hand is bigger than dealer hand, player wins: FAILED")
+        allPassed = false
     }
 
     if(test19()){
@@ -484,11 +503,19 @@ function runTests(){
     }
     else{
         console.log("Test19: player hand is bigger than dealer hand but over 21, player loses: FAILED")
+        allPassed = false
     }
     if(test20()){
         console.log("Test20: player hand is smaller than dealer hand, player loses: PASSED")
     }
     else{
         console.log("Test20: player hand is smaller than dealer hand, player loses: FAILED")
+        allPassed = false
+    }
+    if(allPassed === true){
+        testResults.innerHTML = 'Test Results: All Passed! Check console for details.'
+    }
+    else if(allPassed === false){
+        testResults.innerHTML = 'Test Results: One or more tests failed. Check console for details.'
     }
 }
