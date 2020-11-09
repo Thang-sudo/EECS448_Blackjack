@@ -185,7 +185,10 @@ function playerDrawCard(socket){
             cardNum = parseInt(cardLabel)
             playerHandSum = cardNum + playerHandSum
         }
-        
+        if(playerHandSum > 21 && numOfAce > 0){
+            playerHandSum = playerHandSum - 10;
+            numOfAce = numOfAce - 1;
+        }
         console.log(playerHandSum)
         let imgName = cardDrawn+'.png'
         document.querySelector('#player-hand').innerHTML += "<div class='card-player'><img class = 'card-img' src = 'image/cards/"+imgName+"'></div>"
