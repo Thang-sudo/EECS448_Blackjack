@@ -1,43 +1,91 @@
-let currentBalance = 50
-let betAmount = 0
+//2 Important helper variables below, manage access carefully
+let currentBalance = 50 //stores player's running chip balance
+let betAmount = 0 //stores chip bet amount for each hand
+
+//Variable included for later program expansion
 let currentPhase = 'player phase'
 
 
-let cardArray = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];//Array for suits
-let suitArray = ['D', 'H', 'S', 'C']
-let playerHand = []//Arbitrary number
-let dealerHand = []//Arbitrary number
+let cardArray = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];//Array for possible numerical values of cards
+let suitArray = ['D', 'H', 'S', 'C'] //Array for possible suit values of cards
 
+let playerHand = [] //Array stores player's hand
+let dealerHand = [] //Array stores dealer's hand
+
+//helper variable for player identification on scoreboard
 let m_playerHolder = 0;
+
+//Hand totals for player and dealer
 let playerHandSum = 0
 let dealerHandSum = 0
+
+//Tracks the number of soft aces still in play(Aces being treated as 11s)
 let numOfAce = 0
+
+//Button mapping below
 let nextButton = document.getElementById('nextTurn')
 let hitButton = document.getElementById('hitButton')
 let stayButton = document.getElementById('stayButton')
 let dealButton = document.getElementById('dealButton')
+
+//Chip button mapping below
 let oneChip = document.getElementById('oneChips')
 let fiveChips = document.getElementById('fiveChips')
 let tenChips = document.getElementById('tenChips')
 let fifteenChips = document.getElementById('fifteenChips')
 let clearBet = document.getElementById('clearBet')
-let currentPlayer = 'user';
+
+//MULTIPLAYER helper varibles below
+
+//mode stores current play mode. Values singleplayer or multiplayer
 let mode = ""
+
+//these variables store the indices of each player in multiplayer mode
 let playerNum = 0;
 let enemyNum = 0;
+
+//this player has finished the current hand and is ready to proceed
 let ready = false;
+
+//otherPlayer has finished the current hand and is ready to proceed
 let enemyReady = false;
+
+//boolean allPlayerStay is true when all players have finished with the current hand and ready to proceed
 let allPlayerStay;
+
+//stayCount stores the number of players finished with the current hand
 let stayCount = 0;
+
+/* function startSinglePlayerMode()
+ * initializes a single player game
+ */
 function startSinglePlayerMode(){
     mode = "singleplayer";
     console.log(mode)
+
+    /*
+     * Hit and Stay buttons used by player during playing phase
+     */
     stayButton.addEventListener("click", Stay)
     hitButton.addEventListener("click", Hit)
+
+    /*
+     * Next Button used after end of hand to advance game to next hand
+     * Does not become available until current hand ends
+     */
     nextButton.addEventListener("click", startNextTurn)
+
+    /*
+     * Deal Button used to separate the betting and playing phases
+     * Pressing deal locks in bet values and deals hand. 
+     */
     dealButton.addEventListener("click", changesWhenBetCalled)
 }
 
+/* function startMultiPlayerMode()
+ * Initializes a multiplayer game
+ * Involves a lot of client-side setup for Socket.io communication between players
+ */
 function startMultiPlayerMode(){
     
     const socket = io();
@@ -118,6 +166,9 @@ function startMultiPlayerMode(){
     })
 }
 
+/* helper function for multiplayer mode
+ * 
+ */
 function playerConnectionStatus(number){
     let player = `#player${parseInt(number) + 1}`
     let playerID = `#playerID${parseInt(number) + 1}` //For scoreboard
@@ -133,12 +184,18 @@ function playerConnectionStatus(number){
     }
 }
 
+/* function startGameRule()
+ * Displays game rules when selected
+ */
 function startGameRule(){
     window.location.href = "gamerule.html"
 }
 
 
-// Draw card to hand
+/*
+ * Draws a card and adds it to the hand passed in as a parameter
+ * @param hand: the hand to add the card to. Either playerHand or dealerHand
+ */
 function drawACard(hand){
     let cardDrawn = ''
     do{
@@ -149,12 +206,18 @@ function drawACard(hand){
     return cardDrawn
 }
 
-// add card to player hand
+/* @pre: player selects the Hit button in singlePlayer mode
+ * @post: playerDrawCard() is called to draw a card and add it to the player's hand
+ */
 function Hit(){
     // console.log(mode)
     playerDrawCard(); 
 }
 
+/* @pre: player selects the Hit button in multiplayer mode
+ * @post: playerDrawCard(socket) is called to draw a card and add it to the player's hand
+ * @param socket need this parameter when calling playerDrawCard in multiplayer mode
+ */
 function hitInMultiplayer(socket){
     playerDrawCard(socket);
 }
@@ -171,29 +234,31 @@ function playerDrawCard(socket){
         }
         else if(cardLabel === 'A'){
             console.log("Drew " + cardLabel)
-            numOfAce = numOfAce + 1;
+            numOfAce = numOfAce + 1; //increment soft Ace counter
             if(playerHandSum + 11 > 21){
                 cardNum = 1
-                numOfAce = numOfAce - 1;
+                numOfAce = numOfAce - 1; //decrement soft Ace counter when it becomes a '1'
             }
             else{
                 cardNum = 11
             }
-            playerHandSum = playerHandSum + cardNum
+            playerHandSum = playerHandSum + cardNum //recalculate hand total
         }
         else{
             cardNum = parseInt(cardLabel)
-            playerHandSum = cardNum + playerHandSum
+            playerHandSum = cardNum + playerHandSum //recalculate hand total
         }
+
+        //if statement prevents bust when an 11-valued Ace is in the hand. 
         if(playerHandSum > 21 && numOfAce > 0){
-            playerHandSum = playerHandSum - 10;
-            numOfAce = numOfAce - 1;
+            playerHandSum = playerHandSum - 10; //Changes Ace value from 11 to 1
+            numOfAce = numOfAce - 1; //decrements counter of 11-valued Aces
         }
         console.log(playerHandSum)
         let imgName = cardDrawn+'.png'
         document.querySelector('#player-hand').innerHTML += "<div class='card-player'><img class = 'card-img' src = 'image/cards/"+imgName+"'></div>"
     }
-    handCheck(socket)
+    handCheck(socket) //check the hand for blackjack or busts after a new card is drawn
 }
 
 // Player in multiple player mode hits stay
@@ -234,6 +299,8 @@ function Stay(socket){
     
 }
 
+
+// helper function checks if all players have finished the hand and are ready to advance
 function checkBothPlayerStay(socket){
     socket.emit('check-all-player-stay', true);
     socket.on('all-stay', allStay =>{
@@ -244,8 +311,7 @@ function checkBothPlayerStay(socket){
 }
 
 
-
-// check if player is over 21
+// helper function checks player hand for blackjack or busts
 function handCheck(socket){
     if(playerHandSum === 21){
         console.log("Black Jack!")
@@ -327,7 +393,10 @@ function disableChips(balance){
     }
 }
 
-// Reveal dealer hand
+/* reveals dealer hand
+ * @pre: all player(s) have finished their hand 
+ * @post: dealer's hand is revealed and winners are determined
+ */
 function revealDealerHand(){
     let imgName = dealerHand[0] + '.png'
     document.getElementById('dealer-hand').children[0].innerHTML = "<div class='card-player'><img class = 'card-img' src = 'image/cards/"+imgName+"'></div>"
@@ -349,15 +418,18 @@ function revealDealerHand(){
                 else{
                     cardNum = 11
                 }
-                dealerHandSum = dealerHandSum + cardNum
+                dealerHandSum = dealerHandSum + cardNum //recalculate hand total
             }
             else{
                 cardNum = parseInt(cardLabel)
-                dealerHandSum = dealerHandSum + cardNum
+                dealerHandSum = dealerHandSum + cardNum //recalculate hand total
             }
     }
 }
 
+/* helper function disables chip buttons when balance is too low
+ * called immediately upon beginning a new hand
+ */
 function disableBetAmount(balance){
     if(balance < 1){
         oneChip.disabled = true;
@@ -391,7 +463,9 @@ function disableBetAmount(balance){
     }
 }
 
-// changes when busted or black jack happens
+/* helper function turns on the next button when the current hand has ended
+ * Busting, blackjack, all players staying can trigger this function
+ */
 function getNextButton(){
     document.getElementById('nextTurn').style.display = "inline-block"
     hitButton.disabled = true
@@ -401,7 +475,6 @@ function getNextButton(){
 
 // Start a new turn when user presses next button
 function startNextTurn(){
-    // clear player hand and creat new hand for dealer
     betAmount = 0
     disableBetAmount(currentBalance);
     clearBet.disabled = false;
@@ -421,7 +494,10 @@ function startNextTurn(){
     
 }
 
-//generate dealer hand
+/* helper function initializes dealer's hand 
+ * @pre: player has finished betting phase, and has selected 'Deal'
+ * @post: dealer's hand is initialized, first two cards are drawn, with one hidden
+ */
 function dealerDraw(){
     if(currentPhase === 'player phase'){
         let cardDrawn = ''
@@ -457,7 +533,11 @@ function dealerDraw(){
     }
 }
 
-// Player chooses an amount to bet, then player can start to hit
+/* helper function governs betting
+ * Allows betting any combination of the chips between 1 and player's chip balance
+ * clearBet resets to 0
+ * Pressing the deal button locks these bets in 
+ */
 function bet(id){
     if(id === 'oneChip'){
         if((currentBalance-betAmount) >= 1){
@@ -507,7 +587,10 @@ function bet(id){
     }
 }
 
-// Able Hit and Stay after player bet
+/* helper function called once bets are finalized and the round advances to the playing stage
+ * @pre: called by the 'deal' button
+ * @post: disables betting buttons, draws player and dealer hand, enables playing buttons 
+ */
 function changesWhenBetCalled(){
     console.log(betAmount)
     currentBalance = currentBalance - betAmount
@@ -533,6 +616,7 @@ function changesWhenBetCalled(){
 // Check for the win condition
 function checkWinCondition(socket){
     if(currentBalance >= 100){
+        document.getElementById('balanceText').innerText = "Current Balance:" + currentBalance + " Chips"
         console.log("Player wins")
         document.getElementById('message').innerText = 'Player wins'
         hitButton.style.display = "none"
@@ -554,6 +638,7 @@ function checkWinCondition(socket){
         }
     }
     else if(currentBalance <= 0){
+        document.getElementById('balanceText').innerText = "Current Balance:" + currentBalance + " Chips"
         console.log("Player lost")
         document.getElementById('message').innerText = 'Player loses'
         hitButton.style.display = "none"
