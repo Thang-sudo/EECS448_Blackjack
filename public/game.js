@@ -21,7 +21,6 @@ let fiveChips = document.getElementById('fiveChips')
 let tenChips = document.getElementById('tenChips')
 let fifteenChips = document.getElementById('fifteenChips')
 let clearBet = document.getElementById('clearBet')
-let resetButton = document.getElementById('ressetButton')
 let currentPlayer = 'user';
 let mode = ""
 let playerNum = 0;
