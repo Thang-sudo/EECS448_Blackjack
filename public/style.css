@@ -389,8 +389,9 @@ body
   text-align: center;
   text-decoration: none;
   outline: none;
-  color: #fff;
-  background-color: lightcoral;
+  color:rgb(255, 187, 0);
+  background-color: rgb(255, 187, 0);
+  background-image:url('image/clearbet.jpg');
   background-size: cover;
   border: none;
   border-radius: 50%;
